@@ -8,7 +8,7 @@ from openai import OpenAI
 
 # ---- CONFIG ----
 st.set_page_config(page_title="Water Habits for Kids", layout="wide")
-client = OpenAI(api_key="")  # Replace with your actual key
+client = OpenAI(api_key= st.secrets["OPENAI_API_KEY"])  # Replace with your actual key
 
 # ---- LOAD DATA ----
 tips_df = pd.read_csv("expanded_tips_data.csv")

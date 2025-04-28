@@ -233,21 +233,33 @@ elif page == "goals":
             h1, h2, h3 {
                 color: black;
             }
+            .goal-image-caption {
+                text-align: center;
+                color: #003344;
+                font-weight: bold;
+                margin-top: 10px;
+                font-size: 18px;
+            }
+            .goal-image {
+                width: 100%;
+                border-radius: 15px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
         </style>
     """, unsafe_allow_html=True)
 
     # Centered and Black Water-Saving Goals Header
     st.markdown("<h1 style='text-align:center; color:black;'>🌍 Water-Saving Goals</h1>", unsafe_allow_html=True)
 
-    # Embed first image (Kids in Yard)
+    # --- First Image ---
     st.markdown(f"""
-<div style="text-align:center;">
-    <img src="static/Kids_in_Yard.jpg" style="width:100%; border-radius:15px;">
-    <p style="color:#003344; font-weight:bold; margin-top:10px;">Learning Rainwater Collection</p>
-</div>
-""", unsafe_allow_html=True)
+    <div style="text-align:center;">
+        <img src="static/Kids_in_Yard.jpg" class="goal-image">
+        <div class="goal-image-caption">Learning Rainwater Collection</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    # Floating Card with Water Goals Text
+    # --- Floating Card: First Section of Text ---
     st.markdown("""
     <div class="goals-card">
     <div class="goals-text">
@@ -278,15 +290,15 @@ elif page == "goals":
     </div>
     """, unsafe_allow_html=True)
 
-    # Embed second image (Kids in Bathroom)
+    # --- Second Image ---
     st.markdown(f"""
-<div style="text-align:center;">
-    <img src="static/Kids_in_Bathroom.jpg" style="width:100%; border-radius:15px;">
-    <p style="color:#003344; font-weight:bold; margin-top:10px;">Practicing Water-Saving at Home</p>
-</div>
-""", unsafe_allow_html=True)
+    <div style="text-align:center;">
+        <img src="static/Kids_in_Bathroom.jpg" class="goal-image">
+        <div class="goal-image-caption">Practicing Water-Saving at Home</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    # Floating Card with rest of Water Goals Text
+    # --- Floating Card: Second Section of Text ---
     st.markdown("""
     <div class="goals-card">
     <div class="goals-text">

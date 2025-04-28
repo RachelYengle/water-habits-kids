@@ -2,7 +2,7 @@
 
 import streamlit as st
 import pandas as pd
-import base64
+import base64, pathlib
 import re
 from openai import OpenAI
 
@@ -29,6 +29,27 @@ def set_background(image_file):
         </style>
     """
     st.markdown(css, unsafe_allow_html=True)
+
+# ---- Group Photo and SJSU logo on About us section ----
+def img_to_base64(path):
+    return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
+
+sjsu_b64  = img_to_base64("static/sjsu_logo.png")
+photo_b64 = img_to_base64("static/Photo4.jpg")
+
+st.markdown(f"""
+<div style="text-align:center;">
+    <img src="data:image/png;base64,{sjsu_b64}" style="width:200px;">
+</div>
+
+<div style="text-align:center; margin-top:20px;">
+    <img src="data:image/jpeg;base64,{photo_b64}" style="width:80%; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+    <p style="margin-top:10px; font-size:16px; font-weight:bold; color:#004466;">
+        Front Row (L–R): Andy Nguyen, Bella Le, Gisselle Picho<br>
+        Back Row (L–R): Rachel Yengle, Shreya Sobti
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # ---- SESSION STATE ----
 if 'tips_used' not in st.session_state:
@@ -137,7 +158,7 @@ elif page == "about":
     # Display team photo and names
     st.markdown("""
         <div style="text-align: center;">
-            <img src="static/Photo 4.jpg" alt="Team Photo" style="width: 80%; border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); margin-top: 20px;">
+            <img src="static/Photo4.jpg" alt="Team Photo" style="width: 80%; border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); margin-top: 20px;">
             <p style="margin-top: 10px; font-size: 16px; font-weight: bold; color: #004466;">
                 Front Row (L–R): Andy Nguyen, Bella Le, Gisselle Picho<br>
                 Back Row (L–R): Rachel Yengle, Shreya Sobti

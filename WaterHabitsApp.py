@@ -212,8 +212,50 @@ elif page == "about":
 # ---- GOALS ----
 elif page == "goals":
     st.header("🌍 Water-Saving Goals")
-    st.write("Our mission is to help families and classrooms build daily habits that conserve water, one fun tip and game at a time.")
+    
+    st.write("""
+    ### Our Journey to Building Water Habits for Kids 🌱
+    
+    Our team started this project with one simple question:  
+    *How can we teach young children the importance of water conservation in a way that truly sticks?*
+    
+    As we explored this question, we realized that while there were many resources for adults, there were very few tools designed specifically for kids — especially tools that made saving water feel **fun**, **personal**, and **empowering**.  
+    We saw an opportunity to create something new: an interactive experience where kids could learn through storytelling, games, and real-life action.
 
+    ### Understanding the Problem 🚰
+    We spent time researching environmental education methods, behavior-change psychology, and how children best develop daily habits.  
+    Key insights included:
+    - Kids respond better to **short, simple actions** they can control.
+    - **Positive reinforcement** and visual progress tracking (like badges and pledges) increase motivation.
+    - Stories and characters help children **relate emotionally** to causes like water conservation.
+    
+    These findings shaped our goal: to build an app that doesn’t just tell kids about water — it **invites them to become water heroes** through everyday choices.
+
+    ### Building the Solution 💡
+    We developed **Water Habits for Kids** to make water-saving easy, engaging, and meaningful.  
+    Every part of the app — from personalized tips, to eco-stories, to visual games — was designed with one idea in mind:  
+    **Small habits today build responsible citizens tomorrow.**
+
+    ### Why We Created Water Goals 🎯
+    As we refined our app, we realized that **setting a goal** gives children a sense of ownership over their habits.  
+    A child who pledges to "Turn off the tap while brushing" for a week feels proud of their commitment and is more likely to carry the habit forward.
+
+    That’s why we built the **Water Goals** feature:
+    - To help children **choose one simple action**.
+    - To **track their progress** over days and weeks.
+    - To **celebrate success** and reinforce positive behavior.
+    
+    Every pledge made is a small promise — but together, these promises ripple outward to create a lasting impact on families, communities, and the planet.
+
+    ### Our Mission 🌎
+    Our mission is to empower young generations to protect water through everyday action — starting with one small, achievable goal at a time.
+    
+    We believe that when children understand they can make a difference, they grow up knowing their actions matter.  
+    And with millions of small heroes around the world, the future of water can be brighter for all.
+    """)
+
+
+# ---- TIPS TAB ----
 elif page == "tips":
     st.markdown("""
         <style>

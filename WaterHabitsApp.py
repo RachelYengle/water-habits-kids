@@ -6,6 +6,61 @@ import base64, pathlib
 import random
 from openai import OpenAI
 
+# ---- PRIVACY POLICY GATE ----
+if 'agreed_to_terms' not in st.session_state:
+    st.session_state.agreed_to_terms = False
+if 'show_privacy' not in st.session_state:
+    st.session_state.show_privacy = False
+if 'show_terms' not in st.session_state:
+    st.session_state.show_terms = False
+
+if not st.session_state.agreed_to_terms:
+    st.markdown("<h1 style='text-align:center; color:#003344;'>🚸 Welcome to Water Habits for Kids</h1>", unsafe_allow_html=True)
+    st.markdown("""
+    Before using the app, please review and agree to our [Privacy Policy](#privacy-policy) and [Terms of Service](#terms-of-service).
+    """)
+
+    if st.button("📜 View Privacy Policy"):
+        st.session_state.show_privacy = True
+
+    if st.button("📜 View Terms of Service"):
+        st.session_state.show_terms = True
+
+    if st.session_state.show_privacy:
+        with st.expander("🔒 Privacy Policy", expanded=True):
+            st.write("""
+            **Privacy Policy**  
+            - We **do not collect** your name, age, or any personal information.  
+            - We only track how many water-saving tips or stories you create to improve the app experience.  
+            - Your information stays private and is **never shared** with anyone else.  
+            By using this app, you agree to this simple, kid-friendly privacy approach.
+            """)
+            if st.button("❌ Close Privacy Policy"):
+                st.session_state.show_privacy = False
+                st.rerun()
+
+    if st.session_state.show_terms:
+        with st.expander("📜 Terms of Service", expanded=True):
+            st.write("""
+            **Terms of Service**  
+            - This app is for **educational and fun purposes** only.  
+            - Water tips and stories are AI-generated for inspiration and are not official advice.  
+            - Use this app responsibly.  
+            By continuing, you accept these terms.
+            """)
+            if st.button("❌ Close Terms of Service"):
+                st.session_state.show_terms = False
+                st.rerun()
+
+    agree = st.checkbox("✅ I have read and agree to the Privacy Policy and Terms of Service.")
+
+    if agree:
+        if st.button("🚀 Continue to Water Habits App"):
+            st.session_state.agreed_to_terms = True
+            st.rerun()
+
+    st.stop()
+
 # ---- CONFIG ----
 st.set_page_config(page_title="Water Habits for Kids", layout="wide")
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])

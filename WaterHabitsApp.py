@@ -617,6 +617,38 @@ elif page == "tips":
 
     # Bubble animation already global
     # Only light fade-in for content if needed (optional)
+    st.markdown("""
+<style>
+/* Main labels (text inputs, selects) */
+label, .stTextInput>label, .stSelectbox>label {
+    color: #002244 !important;
+    font-weight: bold !important;
+}
+
+/* Child age slider main label */
+.stSlider>label {
+    color: #002244 !important;
+    font-weight: bold !important;
+}
+
+/* Child age slider range numbers ("3" and "12") */
+div[data-baseweb="slider"] > div > div > div > div {
+    color: black !important;
+    font-weight: bold !important;
+}
+</style>
+""", unsafe_allow_html=True)
+    
+    st.markdown("""
+<style>
+/* Fix ALL slider marks ("3" and "12" numbers below the slider) */
+div[data-baseweb="slider"] span {
+    color: black !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
     st.markdown("""
         <style>
@@ -667,28 +699,6 @@ elif page == "tips":
     st.markdown("""
 <style>
 /* Fix child age slider numbers */
-div[data-baseweb="slider"] > div > div > div > div {
-    color: black !important;
-    font-weight: bold !important;
-}
-</style>
-""", unsafe_allow_html=True)
-    
-    st.markdown("""
-<style>
-/* Main labels (text inputs, selects) */
-label, .stTextInput>label, .stSelectbox>label {
-    color: #002244 !important;
-    font-weight: bold !important;
-}
-
-/* Child age slider main label */
-.stSlider>label {
-    color: #002244 !important;
-    font-weight: bold !important;
-}
-
-/* Child age slider range numbers ("3" and "12") */
 div[data-baseweb="slider"] > div > div > div > div {
     color: black !important;
     font-weight: bold !important;

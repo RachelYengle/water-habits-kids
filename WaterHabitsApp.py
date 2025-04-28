@@ -29,10 +29,10 @@ if not st.session_state.agreed_to_terms:
         font-weight: bold;
     }
 
-    /* Fix All Button Text + Background */
+    /* Force Navy Buttons + White Text */
     div.stButton > button {
-        background-color: #0a4c86 !important; /* Navy background */
-        color: white !important;              /* White text */
+        background-color: #0a4c86 !important;
+        color: white !important;
         font-weight: bold !important;
         border-radius: 10px;
         height: 50px;
@@ -40,25 +40,28 @@ if not st.session_state.agreed_to_terms:
         font-size: 18px;
         border: none;
         transition: background-color 0.3s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+
+    /* Ensure ALL button child text is white */
+    div.stButton > button * {
+        color: white !important;
+        font-weight: bold !important;
+    }
+
+    /* Button Hover Effect */
     div.stButton > button:hover {
         background-color: #083d6d !important;
         transform: scale(1.05);
     }
 
-    /* Make span/div inside buttons also white */
-    div.stButton > button > div,
-    div.stButton > button > span,
-    div.stButton > button > div > span {
-        color: white !important;
-        font-weight: bold !important;
-    }
-
-    /* Expander (Privacy + Terms) */
+    /* Expander Style (Privacy + Terms) */
     .stExpander > summary {
         background-color: #0a4c86 !important;
         color: white !important;
-        font-weight: bold !important;
+        font-weight: bold;
         border-radius: 10px;
         padding: 10px;
     }

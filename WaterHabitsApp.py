@@ -15,7 +15,7 @@ if 'show_terms' not in st.session_state:
     st.session_state.show_terms = False
 
 if not st.session_state.agreed_to_terms:
-    # Background + Style
+    # Background + Styles
     st.markdown("""
     <style>
     /* Light Blue Background */
@@ -23,49 +23,56 @@ if not st.session_state.agreed_to_terms:
         background-color: #d6f4ff;
     }
 
-    /* Make all general text black */
+    /* General Text (Black) */
     h1, h2, h3, h4, p, label, .stMarkdown, .stExpanderHeader, .css-1v0mbdj, .css-1dp5vir {
         color: black !important;
         font-weight: bold;
     }
 
-    /* BUTTON Styling - Navy Background + White Text */
-    button[kind="primary"] {
-        background-color: #0a4c86 !important;
-        color: white !important;
+    /* Fix All Button Text + Background */
+    div.stButton > button {
+        background-color: #0a4c86 !important; /* Navy background */
+        color: white !important;              /* White text */
         font-weight: bold !important;
-        border-radius: 10px !important;
-        height: 50px !important;
-        width: 100% !important;
-        font-size: 18px !important;
-        border: none !important;
+        border-radius: 10px;
+        height: 50px;
+        width: 100%;
+        font-size: 18px;
+        border: none;
         transition: background-color 0.3s, transform 0.2s;
     }
-
-    /* Button Hover Effect */
-    button[kind="primary"]:hover {
+    div.stButton > button:hover {
         background-color: #083d6d !important;
-        transform: scale(1.05) !important;
+        transform: scale(1.05);
     }
 
-    /* Expander Header Styling */
+    /* Make span/div inside buttons also white */
+    div.stButton > button > div,
+    div.stButton > button > span,
+    div.stButton > button > div > span {
+        color: white !important;
+        font-weight: bold !important;
+    }
+
+    /* Expander (Privacy + Terms) */
     .stExpander > summary {
         background-color: #0a4c86 !important;
         color: white !important;
         font-weight: bold !important;
-        border-radius: 10px !important;
-        padding: 10px !important;
+        border-radius: 10px;
+        padding: 10px;
     }
     </style>
     """, unsafe_allow_html=True)
 
-    # ---- WELCOME HEADER ----
+    # ---- Welcome Title ----
     st.markdown("<h1 style='text-align:center;'>🚸 Welcome to Water Habits for Kids</h1>", unsafe_allow_html=True)
+
     st.markdown("""
     Before using the app, please review and agree to our **Privacy Policy** and **Terms of Service**.
     """)
 
-    # ---- PRIVACY & TERMS BUTTONS ----
+    # ---- Privacy Policy + Terms Buttons ----
     col_privacy, col_terms = st.columns(2)
     with col_privacy:
         if st.button("📜 View Privacy Policy"):
@@ -74,7 +81,7 @@ if not st.session_state.agreed_to_terms:
         if st.button("📜 View Terms of Service"):
             st.session_state.show_terms = True
 
-    # ---- PRIVACY POLICY EXPANDER ----
+    # ---- Show Privacy Policy ----
     if st.session_state.show_privacy:
         with st.expander("📜 Privacy Policy", expanded=True):
             st.markdown("""
@@ -89,7 +96,7 @@ if not st.session_state.agreed_to_terms:
                 st.session_state.show_privacy = False
                 st.rerun()
 
-    # ---- TERMS OF SERVICE EXPANDER ----
+    # ---- Show Terms of Service ----
     if st.session_state.show_terms:
         with st.expander("📜 Terms of Service", expanded=True):
             st.markdown("""
@@ -104,9 +111,10 @@ if not st.session_state.agreed_to_terms:
                 st.session_state.show_terms = False
                 st.rerun()
 
-    # ---- AGREEMENT CHECKBOX & CONTINUE ----
+    # ---- Agreement Checkbox ----
     agree = st.checkbox("✅ I have read and agree to the Privacy Policy and Terms of Service.")
 
+    # ---- Continue Button ----
     if agree:
         if st.button("👉 Continue"):
             st.session_state.agreed_to_terms = True

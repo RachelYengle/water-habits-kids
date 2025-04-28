@@ -268,6 +268,11 @@ elif page == "goals":
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
+        .goal-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+                
     </style>
 """, unsafe_allow_html=True)
 

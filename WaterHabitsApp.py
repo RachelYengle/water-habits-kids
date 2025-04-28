@@ -826,43 +826,38 @@ div[data-baseweb="slider"] > div > div > div > div {
 elif page == "story":
     set_background("static/Background.jpg")
 
-    # --- CORRECT BUTTON + TEXT STYLING ---
+    # ---- Corrected NAV BUTTON STYLE for Story Page ----
     st.markdown("""
     <style>
-    /* BUTTON BACKGROUND + TEXT FIX */
-    .stButton>button {
+    /* NAV buttons (Home, About Us, Water Goals) */
+    div.stButton > button {
         background-color: #0a4c86; /* Navy blue background */
-        color: white !important;  /* Force white text on button */
+        color: white !important;   /* White text */
         font-weight: bold;
         border-radius: 10px;
         padding: 0.5rem 1.5rem;
+        font-size: 18px;
+        width: 100%;
+        height: 50px;
+        border: none;
+        transition: background-color 0.3s, transform 0.2s;
     }
 
-    /* Fix inside text span */
-    .stButton>button > div {
+    /* Force inner text (span) inside buttons to white */
+    div.stButton > button > div, div.stButton > button span {
         color: white !important;
         font-weight: bold;
     }
 
-    /* Fix any span inside button */
-    .stButton>button span {
-        color: white !important;
-        font-weight: bold;
-    }
-
-    /* Button hover effect */
-    .stButton>button:hover {
+    /* Hover Effect */
+    div.stButton > button:hover {
         background-color: #083d6d;
+        transform: scale(1.05);
     }
 
     /* Light Blue Page Background */
     .stApp {
         background-color: #d6f4ff !important;
-    }
-
-    /* Headings and Paragraphs Dark Blue */
-    h1, h2, h3, h4, .stMarkdown, p {
-        color: #002244 !important;
     }
 
     /* Floating Card Style */

@@ -824,40 +824,38 @@ div[data-baseweb="slider"] > div > div > div > div {
 elif page == "story":
     set_background("static/Background.jpg")
 
-    # Fix button colors (no extra indent)
+    # ---- BUTTON & PAGE STYLING ----
     st.markdown("""
     <style>
-    /* Fix Nav Buttons on Story page */
+    /* Fix All Buttons Navy Blue with White Text */
     .stButton>button {
-        background-color: #0a4c86; /* Dark Navy Background */
-        color: white;              /* Make Text White */
+        background-color: #0a4c86;
+        color: white !important;
         font-weight: bold;
         border-radius: 10px;
         padding: 0.5rem 1.5rem;
     }
+
+    .stButton>button span {
+        color: white !important;
+        font-weight: bold;
+    }
+
     .stButton>button:hover {
         background-color: #083d6d;
     }
 
-    /* Also fix general button text */
-    .stButton>button span {
-        color: white !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-    # Light blue background + bubble animation
-    st.markdown("""
-    <style>
+    /* Light Blue Page Background */
     .stApp {
         background-color: #d6f4ff !important;
     }
 
+    /* Headings and Paragraphs Dark Blue */
     h1, h2, h3, h4, .stMarkdown, p {
         color: #002244 !important;
     }
 
-    /* Floating card style */
+    /* Floating Card Style */
     .story-card {
         background-color: rgba(255, 255, 255, 0.85);
         padding: 2rem;
@@ -867,7 +865,7 @@ elif page == "story":
         max-width: 900px;
     }
 
-    /* Navy Blue Game Settings Expander */
+    /* Navy Blue Expander */
     .stExpander > summary {
         background-color: #0a4c86 !important;
         color: white !important;
@@ -878,11 +876,45 @@ elif page == "story":
     </style>
     """, unsafe_allow_html=True)
 
-    st.markdown("<h1 style='text-align:center;'>📖 Eco Story Adventure + Game</h1>", unsafe_allow_html=True)
-
-    # Bubble Background
+    # ---- BUBBLE ANIMATION ----
     unique_id = random.randint(1, 999999)
     st.markdown(f"""
+    <style>
+    .bubble {{
+        position: absolute;
+        bottom: -100px;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: bubbleUp 20s infinite;
+        z-index: 0;
+    }}
+
+    @keyframes bubbleUp {{
+        0% {{
+            transform: translateY(0) scale(0.8);
+            opacity: 0.8;
+        }}
+        50% {{
+            opacity: 0.5;
+        }}
+        100% {{
+            transform: translateY(-1500px) scale(1.2);
+            opacity: 0;
+        }}
+    }}
+
+    .bubble-container {{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }}
+    </style>
+
     <div class="bubble-container" id="bubbles-{unique_id}">
         <div class="bubble light" style="left:5%; width:20px; height:20px; animation-delay:0s;"></div>
         <div class="bubble medium" style="left:15%; width:35px; height:35px; animation-delay:5s;"></div>
@@ -895,7 +927,9 @@ elif page == "story":
     </div>
     """, unsafe_allow_html=True)
 
-    # Inputs
+    # ---- PAGE CONTENT ----
+    st.markdown("<h1 style='text-align:center;'>📖 Eco Story Adventure + Game</h1>", unsafe_allow_html=True)
+
     hero = st.text_input("🧒 Hero’s Name", placeholder="e.g., Andy")
     setting = st.selectbox("🌍 Choose a Story Setting", ["bathroom", "garden", "school", "beach", "forest"])
     habit = st.selectbox("💧 Water Habit Focus", ["brushing teeth", "watering plants", "taking showers", "fixing leaks"])
@@ -906,11 +940,13 @@ elif page == "story":
 
     if st.button("✨ Generate My Eco Adventure"):
         with st.spinner("Creating your story and game..."):
-            # Generate story
+
+            # Generate Story
             story_prompt = (
                 f"Write a fun children's story about {hero}, a young eco-hero in the {setting}, "
                 f"learning to save water by practicing {habit}. Include a friendly sidekick and end with a water-saving tip."
             )
+
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -920,69 +956,49 @@ elif page == "story":
                 max_tokens=800,
                 temperature=0.8
             )
+
             story = response.choices[0].message.content.strip()
 
-            # Define Game Challenge
+            # Game Rules
             rules = {
-                "brushing teeth": {
-                    "challenge": "🪥 Tap to turn off the faucet while brushing.",
-                    "goal": "Save 10 gallons by acting quickly!",
-                    "points": "+5 per correct tap, -2 for misses."
-                },
-                "watering plants": {
-                    "challenge": "🌿 Water only dry plants. Skip the ones already wet.",
-                    "goal": "Keep your garden healthy and hydrated!",
-                    "points": "+10 correct, -5 for overwatering."
-                },
-                "taking showers": {
-                    "challenge": "🚿 Finish your shower in under 2 minutes.",
-                    "goal": "Use under 5 gallons total!",
-                    "points": "+2 per second saved."
-                },
-                "fixing leaks": {
-                    "challenge": "🔧 Tap leaks before the bucket fills.",
-                    "goal": "Fix 10 leaks in time!",
-                    "points": "+5 per fix, -3 for missed."
-                }
+                "brushing teeth": {"challenge": "🪥 Tap to turn off faucet.", "goal": "Save 10 gallons!", "points": "+5 per tap, -2 miss."},
+                "watering plants": {"challenge": "🌿 Water dry plants only.", "goal": "Healthy garden!", "points": "+10 good, -5 overwater."},
+                "taking showers": {"challenge": "🚿 Finish in 2 min.", "goal": "Save 5 gallons!", "points": "+2 per second saved."},
+                "fixing leaks": {"challenge": "🔧 Tap leaks fast.", "goal": "Fix 10 leaks!", "points": "+5 fix, -3 miss."}
             }
 
             game = rules.get(habit.lower(), {
-                "challenge": "💧 Make a smart water-saving choice!",
-                "goal": "Reduce waste and become an Eco Hero!",
-                "points": "+5 per smart move."
+                "challenge": "💧 Make smart water choices!",
+                "goal": "Reduce waste!",
+                "points": "+5 per action."
             })
 
             # 📘 Personalized Story
             st.markdown("<h2 style='text-align:center;'>📘 Your Personalized Story</h2>", unsafe_allow_html=True)
-            st.markdown(f"""
-            <div class="story-card">
-            <p>{story}</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown(f"<div class='story-card'><p>{story}</p></div>", unsafe_allow_html=True)
 
             # 🎮 Water-Saving Game
             st.markdown("<h2 style='text-align:center;'>🎮 Your Water-Saving Game</h2>", unsafe_allow_html=True)
             st.markdown(f"""
-            <div class="story-card">
+            <div class='story-card'>
             <p><strong>Challenge:</strong> {game['challenge']}</p>
             <p><strong>Goal:</strong> {game['goal']}</p>
             <p><strong>Scoring:</strong> {game['points']}</p>
             </div>
             """, unsafe_allow_html=True)
 
-            # 🎬 Eco Adventure Comic
+            # 🎬 Eco Comic
             st.markdown("<h2 style='text-align:center;'>🎬 Your Eco Adventure Comic</h2>", unsafe_allow_html=True)
 
-            # Generate Comic Scenes
             scene_prompt = (
-                f"Create a 4-6 panel comic script from this story. Each panel numbered (1., 2., 3...) "
-                f"with 1-2 sentence visual description. Panels MUST start with a number on a new line.\n\n"
-                f"Story:\n{story}"
+                f"Create a 4-6 panel comic script from this story. Number panels (1., 2., etc.) and 1-2 sentences each.\n\nStory:\n{story}"
             )
+
             scene_response = client.chat.completions.create(
                 model="gpt-4",
                 messages=[{"role": "user", "content": scene_prompt}]
             )
+
             scene_text = scene_response.choices[0].message.content.strip()
 
             import re
@@ -1011,5 +1027,5 @@ elif page == "story":
                             st.warning(f"⚠️ Could not generate image for Panel {i}.")
                             st.text(f"Panel description: {panel_cleaned}")
             else:
-                st.warning("⚠️ Comic panels could not be parsed. Here’s raw output:")
+                st.warning("⚠️ Comic panels could not be parsed. Here's raw output:")
                 st.code(scene_text)

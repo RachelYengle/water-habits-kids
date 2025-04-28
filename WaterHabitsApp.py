@@ -8,7 +8,7 @@ from openai import OpenAI
 
 # ---- CONFIG ----
 st.set_page_config(page_title="Water Habits for Kids", layout="wide")
-client = OpenAI(api_key= st.secrets["OPENAI_API_KEY"]) 
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # ---- LOAD DATA ----
 tips_df = pd.read_csv("expanded_tips_data.csv")
@@ -30,11 +30,7 @@ def set_background(image_file):
     """
     st.markdown(css, unsafe_allow_html=True)
 
-# ---- Group Photo and SJSU logo on About us section ----
-def img_to_base64(path):
-    return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
-
-# ---- Water gOALS IMAGES ----
+# ---- BASE64 IMAGE LOADER ----
 def img_to_base64(path):
     return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
 
@@ -49,7 +45,8 @@ if 'tip_history' not in st.session_state:
 # ---- PAGE SELECTION ----
 page = st.query_params.get("page", "home")
 
-# ---- GLOBAL STYLE ----
+
+# ---- GLOBAL NAVBAR STYLE ----
 st.markdown("""
     <style>
         .topnav {
@@ -107,8 +104,61 @@ with col_nav:
 # ---- HOME ----
 if page == "home":
     set_background("static/Background.jpg")
+
+    # Bubble CSS and Animation (for Home page too)
+    st.markdown("""
+        <style>
+            /* Bubble Animation */
+            .bubble {
+                position: absolute;
+                bottom: -50px;
+                border-radius: 50%;
+                opacity: 0.8;
+                animation: bubbleUp 9s forwards;
+                z-index: 0;
+            }
+
+            @keyframes bubbleUp {
+                0% {
+                    transform: translateY(0) scale(0.8);
+                    opacity: 0.9;
+                }
+                100% {
+                    transform: translateY(-1200px) scale(1.5);
+                    opacity: 0;
+                }
+            }
+
+            .bubble-container {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                pointer-events: none;
+                top: 0;
+                left: 0;
+                z-index: 0;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # Bubble Colors (NEW! 🌈)
+    st.markdown("""
+    <div class="bubble-container">
+        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Welcome text and two feature cards
     st.markdown("<br><h1 style='text-align:center; color:#003344;'>💧 Welcome to Water Habits for Kids</h1>", unsafe_allow_html=True)
-    
+
     col1, col2 = st.columns(2)
 
     with col1:
@@ -133,120 +183,119 @@ if page == "home":
 
 # ---- ABOUT US ----
 elif page == "about":
-    # Set background image same as home
     set_background("static/Background.jpg")
 
-    # === Load images first (Base64) ===
+    # Load images
     sjsu_b64 = img_to_base64("static/sjsu_logo.png")
     photo_b64 = img_to_base64("static/Photo4.jpg")
 
-    # === Custom Styles ===
+    # Bubble Animation CSS
     st.markdown("""
-        <style>
-            /* Fade-in Animation */
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
+    <style>
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Floating Card Styling */
+        .about-card, .about-image {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .about-card {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            max-width: 1000px;
+            margin: 2rem auto;
+        }
+
+        .about-text {
+            color: black;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            color: black;
+        }
+
+        .about-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-image-caption {
+            text-align: center;
+            color: #003344;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .about-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+
+        /* Bubble Animation */
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: bubbleUp 9s forwards;
+            z-index: 0;
+        }
+
+        @keyframes bubbleUp {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.9;
             }
-
-            .about-card, .about-image {
-                animation: fadeIn 1.5s ease-out;
+            100% {
+                transform: translateY(-1200px) scale(1.5);
+                opacity: 0;
             }
+        }
 
-            .about-card {
-                background-color: rgba(255, 255, 255, 0.8);
-                padding: 2rem;
-                border-radius: 20px;
-                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-                max-width: 1000px;
-                margin: 2rem auto;
-            }
-
-            .about-text {
-                color: black;
-                font-size: 18px;
-                line-height: 1.6;
-            }
-
-            h1, h2, h3 {
-                color: black;
-            }
-
-            .about-image-caption {
-                text-align: center;
-                color: #003344;
-                font-weight: bold;
-                margin-top: 10px;
-                font-size: 18px;
-            }
-
-            .about-image {
-                width: 100%;
-                border-radius: 15px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                margin-bottom: 20px;
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-            }
-
-            /* Hover Zoom Effect */
-            .about-image:hover {
-                transform: scale(1.03);
-                box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            }
-             : absolute;
-    bottom: -50px;
-    background-color: rgba(255, 255, 255, 0.9); /* brighter white */
-    border-radius: 50%;
-    opacity: 0.9;
-    animation: bubbleUp 8s forwards; /* slower */
-    z-index: 0;
-}
-
-@keyframes bubbleUp {
-    0% {
-        transform: translateY(0) scale(0.8);
-        opacity: 0.9;
-    }
-    100% {
-        transform: translateY(-1200px) scale(1.5);
-        opacity: 0;
-    }
-}
-
-/* Bubble Container */
-.bubble-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    top: 0;
-    left: 0;
-    z-index: 0;
-}
-</style>
-
-<!-- Add more and bigger bubbles -->
-<div class="bubble-container">
-    <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
-    <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
-    <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
-    <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
-    <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
-    <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
-    <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
-    <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
-</div>
-                   
-        </style>
+        .bubble-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+    </style>
     """, unsafe_allow_html=True)
 
-    # === About Us Header ===
+    # Floating Colorful Bubbles
+    st.markdown("""
+    <div class="bubble-container">
+        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # About Us Header
     st.markdown("<h1 style='text-align:center; color:black;'>👨‍🏫 About Us</h1>", unsafe_allow_html=True)
 
-    # === Side-by-side layout for SJSU logo and Team Photo ===
+    # Logo and Team Photo side-by-side
     col1, col2 = st.columns([1, 3])
-
     with col1:
         st.markdown(f"""
         <div style="text-align:center;">
@@ -265,7 +314,7 @@ elif page == "about":
         </div>
         """, unsafe_allow_html=True)
 
-    # === Floating Card with About Us Text ===
+    # Floating Card with Text
     st.markdown("""
     <div class="about-card">
     <div class="about-text">
@@ -274,7 +323,8 @@ elif page == "about":
 
     🌍 **Our Mission:**  
     Our mission is to inspire young minds to become lifelong champions of water conservation.  
-    We believe that children are not just the leaders of tomorrow — they are powerful change-makers today. Through fun, interactive learning, we aim to nurture a sense of responsibility, creativity, and care for our planet’s most precious resource: water.  
+    We believe that children are not just the leaders of tomorrow — they are powerful change-makers today.  
+    Through fun, interactive learning, we aim to nurture a sense of responsibility, creativity, and care for our planet’s most precious resource: water.  
     By making sustainability exciting and accessible, we hope to plant seeds of awareness that grow into a future where every drop counts.
 
     ✨ **About Water Habits for Kids:**  
@@ -285,9 +335,9 @@ elif page == "about":
     Turning off the tap while brushing your teeth can save up to 8 gallons of water every day!
 
     🌊 **Why It Matters:**  
-    Teaching children about water conservation from an early age is crucial because the habits they form now will shape the future of our planet. Water is one of our most precious resources, yet it's often taken for granted. By helping kids understand the value of every drop, we empower them to make smarter choices that reduce waste, protect ecosystems, and ensure clean water is available for generations to come.
-
-    Starting with simple, fun actions, children learn that even small changes — like turning off the tap while brushing or fixing a dripping faucet — can make a big impact. Instilling these habits early builds a strong foundation of environmental responsibility, creating a ripple effect that can inspire families, classrooms, and entire communities.
+    Teaching children about water conservation from an early age is crucial because the habits they form now will shape the future of our planet.  
+    Water is one of our most precious resources, yet it's often taken for granted.  
+    By helping kids understand the value of every drop, we empower them to make smarter choices that reduce waste, protect ecosystems, and ensure clean water is available for generations to come.
 
     👉 Thank you for visiting our project — together, let's make every drop count! 🌱
 
@@ -296,15 +346,15 @@ elif page == "about":
     """, unsafe_allow_html=True)
 
 # ---- WATER GOALS ----
+# ---- WATER GOALS ----
 elif page == "goals":
-    # Set the background image same as Home
     set_background("static/Background.jpg")
 
-    # === Load images first (Base64) ===
+    # Load images
     yard_img_b64 = img_to_base64("static/Kids_in_Yard.jpg")
     bathroom_img_b64 = img_to_base64("static/Kids_in_Bathroom.jpg")
 
-    # === Custom CSS Styles ===
+    # Bubble Animation CSS
     st.markdown("""
     <style>
         /* Fade-in Animation */
@@ -313,12 +363,13 @@ elif page == "goals":
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Floating Card Styling */
         .goals-card, .goal-image {
             animation: fadeIn 1.5s ease-out;
         }
 
         .goals-card {
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
@@ -336,6 +387,19 @@ elif page == "goals":
             color: black;
         }
 
+        .goal-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .goal-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+
         .goal-image-caption {
             text-align: center;
             color: #003344;
@@ -344,68 +408,58 @@ elif page == "goals":
             font-size: 18px;
         }
 
-        .goal-image {
+        /* Bubble Animation */
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: bubbleUp 9s forwards;
+            z-index: 0;
+        }
+
+        @keyframes bubbleUp {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-1200px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .bubble-container {
+            position: fixed;
             width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            z-index: 0;
         }
-        .goal-image:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-        }
-        : absolute;
-    bottom: -50px;
-    background-color: rgba(255, 255, 255, 0.9); /* brighter white */
-    border-radius: 50%;
-    opacity: 0.9;
-    animation: bubbleUp 8s forwards; /* slower */
-    z-index: 0;
-}
-
-@keyframes bubbleUp {
-    0% {
-        transform: translateY(0) scale(0.8);
-        opacity: 0.9;
-    }
-    100% {
-        transform: translateY(-1200px) scale(1.5);
-        opacity: 0;
-    }
-}
-
-/* Bubble Container */
-.bubble-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    top: 0;
-    left: 0;
-    z-index: 0;
-}
-</style>
-
-<!-- Add more and bigger bubbles -->
-<div class="bubble-container">
-    <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
-    <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
-    <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
-    <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
-    <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
-    <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
-    <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
-    <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
-</div>
-                     
     </style>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
-    # === Water-Saving Goals Header ===
+    # Floating Colorful Bubbles
+    st.markdown("""
+    <div class="bubble-container">
+        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Page Header
     st.markdown("<h1 style='text-align:center; color:black;'>🌍 Water-Saving Goals</h1>", unsafe_allow_html=True)
 
-    # === First Image ===
+    # First Image (Kids in Yard)
     st.markdown(f"""
     <div style="text-align:center;">
         <img src="data:image/jpeg;base64,{yard_img_b64}" class="goal-image">
@@ -413,7 +467,7 @@ elif page == "goals":
     </div>
     """, unsafe_allow_html=True)
 
-    # === First Floating Card (Journey, Problem, Solution) ===
+    # First Floating Card (Journey, Problem, Solution)
     st.markdown("""
     <div class="goals-card">
     <div class="goals-text">
@@ -444,7 +498,7 @@ elif page == "goals":
     </div>
     """, unsafe_allow_html=True)
 
-    # === Second Image ===
+    # Second Image (Kids in Bathroom)
     st.markdown(f"""
     <div style="text-align:center;">
         <img src="data:image/jpeg;base64,{bathroom_img_b64}" class="goal-image">
@@ -452,7 +506,7 @@ elif page == "goals":
     </div>
     """, unsafe_allow_html=True)
 
-    # === Second Floating Card (Water Goals Feature + Mission) ===
+    # Second Floating Card (Water Goals Feature + Mission)
     st.markdown("""
     <div class="goals-card">
     <div class="goals-text">

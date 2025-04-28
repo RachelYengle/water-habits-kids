@@ -6,7 +6,7 @@ import base64, pathlib
 import random
 from openai import OpenAI
 
-# ---- PRIVACY POLICY GATE (Black Text Version) ----
+# ---- PRIVACY POLICY GATE (Light Blue + Black Text + White Buttons Text) ----
 if 'agreed_to_terms' not in st.session_state:
     st.session_state.agreed_to_terms = False
 if 'show_privacy' not in st.session_state:
@@ -17,13 +17,16 @@ if 'show_terms' not in st.session_state:
 if not st.session_state.agreed_to_terms:
     st.markdown("""
     <style>
+    /* Light Blue Background */
     .stApp {
         background-color: #d6f4ff;
     }
+    /* All Text Black */
     h1, h2, h3, h4, p, label, .stMarkdown, .stExpanderHeader, .css-1v0mbdj, .css-1dp5vir {
         color: black !important;
         font-weight: bold;
     }
+    /* Button Styling (Dark Navy Background, White Text) */
     .stButton>button {
         background-color: #0a4c86;
         color: white !important;
@@ -32,10 +35,19 @@ if not st.session_state.agreed_to_terms:
         height: 50px;
         width: 100%;
         font-size: 18px;
+        border: none;
+        transition: background-color 0.3s, transform 0.2s;
     }
     .stButton>button:hover {
         background-color: #083d6d;
+        transform: scale(1.05);
     }
+    /* Force Button Inner Text (Spans) to be White */
+    .stButton>button > div, .stButton>button span {
+        color: white !important;
+        font-weight: bold;
+    }
+    /* Expander Styling */
     .stExpander > summary {
         background-color: #0a4c86 !important;
         color: white !important;

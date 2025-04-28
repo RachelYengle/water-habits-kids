@@ -92,16 +92,21 @@ with col_logo:
     st.image("static/Logo.png", width=120)
 
 with col_nav:
-    colA, colB, colC = st.columns(3)
-    with colA:
-        if st.button("🏠 Home"):
-            st.session_state.page = "home"
-    with colB:
-        if st.button("👨‍🏫 About Us"):
-            st.session_state.page = "about"
-    with colC:
-        if st.button("💧 Water Goals"):
-            st.session_state.page = "goals"
+    nav_selection = st.radio(
+        "",
+        ["🏠 Home", "👨‍🏫 About Us", "💧 Water Goals"],
+        index=["home", "about", "goals"].index(st.session_state.page) if "page" in st.session_state else 0,
+        horizontal=True,
+        label_visibility="collapsed"
+    )
+
+# Map nav selection back to a "page" string
+nav_map = {
+    "🏠 Home": "home",
+    "👨‍🏫 About Us": "about",
+    "💧 Water Goals": "goals"
+}
+st.session_state.page = nav_map[nav_selection]
 
 # ---- HOME ----
 if page == "home":

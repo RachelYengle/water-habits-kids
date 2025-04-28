@@ -240,7 +240,12 @@ elif page == "goals":
     st.markdown("<h1 style='text-align:center; color:black;'>🌍 Water-Saving Goals</h1>", unsafe_allow_html=True)
 
     # Embed first image (Kids in Yard)
-    st.image("static/Kids_in_Yard.jpg", use_container_width=True, caption="Learning Rainwater Collection")
+    st.markdown(f"""
+<div style="text-align:center;">
+    <img src="static/Kids_in_Yard.jpg" style="width:100%; border-radius:15px;">
+    <p style="color:#003344; font-weight:bold; margin-top:10px;">Learning Rainwater Collection</p>
+</div>
+""", unsafe_allow_html=True)
 
     # Floating Card with Water Goals Text
     st.markdown("""
@@ -274,7 +279,12 @@ elif page == "goals":
     """, unsafe_allow_html=True)
 
     # Embed second image (Kids in Bathroom)
-    st.image("static/Kids_in_Bathroom.jpg", use_container_width=True, caption="Practicing Water-Saving at Home")
+    sst.markdown(f"""
+<div style="text-align:center;">
+    <img src="static/Kids_in_Bathroom.jpg" style="width:100%; border-radius:15px;">
+    <p style="color:#003344; font-weight:bold; margin-top:10px;">Practicing Water-Saving at Home</p>
+</div>
+""", unsafe_allow_html=True)
 
     # Floating Card with rest of Water Goals Text
     st.markdown("""

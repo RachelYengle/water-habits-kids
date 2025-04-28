@@ -6,7 +6,7 @@ import base64, pathlib
 import random
 from openai import OpenAI
 
-# ---- PRIVACY POLICY GATE (Light Blue + Black Text + White Buttons Text) ----
+# ---- PRIVACY POLICY SECTION ----
 if 'agreed_to_terms' not in st.session_state:
     st.session_state.agreed_to_terms = False
 if 'show_privacy' not in st.session_state:
@@ -15,19 +15,22 @@ if 'show_terms' not in st.session_state:
     st.session_state.show_terms = False
 
 if not st.session_state.agreed_to_terms:
+    # Background + Style
     st.markdown("""
     <style>
     /* Light Blue Background */
     .stApp {
         background-color: #d6f4ff;
     }
-    /* All Text Black */
+
+    /* Make all general text black */
     h1, h2, h3, h4, p, label, .stMarkdown, .stExpanderHeader, .css-1v0mbdj, .css-1dp5vir {
         color: black !important;
         font-weight: bold;
     }
-    /* Button Styling (Dark Navy Background, White Text) */
-    .stButton>button {
+
+    /* BUTTON Styling (Dark Navy with White Text) */
+    div.stButton > button {
         background-color: #0a4c86;
         color: white !important;
         font-weight: bold;
@@ -38,16 +41,22 @@ if not st.session_state.agreed_to_terms:
         border: none;
         transition: background-color 0.3s, transform 0.2s;
     }
-    .stButton>button:hover {
+
+    /* Make sure button internal span/div text is white */
+    div.stButton > button > div,
+    div.stButton > button > span,
+    div.stButton > button > div > span {
+        color: white !important;
+        font-weight: bold !important;
+    }
+
+    /* Button Hover Effect */
+    div.stButton > button:hover {
         background-color: #083d6d;
         transform: scale(1.05);
     }
-    /* Force Button Inner Text (Spans) to be White */
-    .stButton>button > div, .stButton>button span {
-        color: white !important;
-        font-weight: bold;
-    }
-    /* Expander Styling */
+
+    /* Expander Headers (Privacy and Terms Boxes) */
     .stExpander > summary {
         background-color: #0a4c86 !important;
         color: white !important;
@@ -58,47 +67,58 @@ if not st.session_state.agreed_to_terms:
     </style>
     """, unsafe_allow_html=True)
 
+    # Welcome Title
     st.markdown("<h1 style='text-align:center;'>🚸 Welcome to Water Habits for Kids</h1>", unsafe_allow_html=True)
+
     st.markdown("""
     Before using the app, please review and agree to our **Privacy Policy** and **Terms of Service**.
     """)
 
-    if st.button("📜 View Privacy Policy"):
-        st.session_state.show_privacy = True
+    # Buttons to view Privacy and Terms
+    col_privacy, col_terms = st.columns(2)
+    with col_privacy:
+        if st.button("📜 View Privacy Policy"):
+            st.session_state.show_privacy = True
+    with col_terms:
+        if st.button("📜 View Terms of Service"):
+            st.session_state.show_terms = True
 
-    if st.button("📜 View Terms of Service"):
-        st.session_state.show_terms = True
-
+    # Show Privacy Policy
     if st.session_state.show_privacy:
-        with st.expander("🔒 Privacy Policy", expanded=True):
-            st.write("""
+        with st.expander("📜 Privacy Policy", expanded=True):
+            st.markdown("""
             **Privacy Policy**  
-            • We **do not collect** your name, age, or any personal information.  
-            • We only track how many water-saving tips or stories you create to improve the app.  
-            • Your information stays private and is **never shared** with anyone else.  
-            By using this app, you agree to our friendly privacy approach.
+            We care about your privacy!  
+            - We do **not collect** your name, age, or any personal information.  
+            - We only track how many water-saving tips or stories you create to improve the app.  
+            - Your information stays private and is **never shared** with anyone else.  
+            By using this app, you agree to this simple, friendly privacy approach.
             """)
             if st.button("❌ Close Privacy Policy"):
                 st.session_state.show_privacy = False
                 st.rerun()
 
+    # Show Terms of Service
     if st.session_state.show_terms:
         with st.expander("📜 Terms of Service", expanded=True):
-            st.write("""
+            st.markdown("""
             **Terms of Service**  
-            • This app is for **educational and fun purposes** only.  
-            • Water tips and stories are AI-generated for inspiration, not official advice.  
-            • Use this app responsibly.  
-            By continuing, you agree to use the app appropriately.
+            This app is for **educational and fun purposes** only.  
+            - All tips and stories are AI-generated for inspiration, not for official advice.  
+            - You use this app at your own discretion.  
+            - We are not responsible for how you use the content outside of the app.  
+            By continuing, you agree to use this app responsibly.
             """)
             if st.button("❌ Close Terms of Service"):
                 st.session_state.show_terms = False
                 st.rerun()
 
+    # Agreement Checkbox
     agree = st.checkbox("✅ I have read and agree to the Privacy Policy and Terms of Service.")
 
+    # Continue Button
     if agree:
-        if st.button("🚀 Continue to Water Habits App"):
+        if st.button("👉 Continue"):
             st.session_state.agreed_to_terms = True
             st.rerun()
 

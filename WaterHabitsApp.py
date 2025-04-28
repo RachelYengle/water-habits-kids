@@ -665,6 +665,16 @@ elif page == "tips":
 
     st.markdown("""
 <style>
+/* Make slider numbers black */
+.css-1cpxqw2, .css-1aumxhk, .stSlider label, .stSlider span {
+    color: black !important;
+    font-weight: bold;
+}
+</style>
+""", unsafe_allow_html=True)
+
+    st.markdown("""
+<style>
 .bubble {
     position: absolute;
     bottom: -100px;

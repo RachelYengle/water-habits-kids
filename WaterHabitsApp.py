@@ -211,9 +211,42 @@ elif page == "about":
 
 # ---- GOALS ----
 elif page == "goals":
-    st.header("🌍 Water-Saving Goals")
-    
-    st.write("""
+    # Set background image same as Home page
+    set_background("static/Background.jpg")
+
+    # Add custom styles
+    st.markdown("""
+        <style>
+            .goals-card {
+                background-color: rgba(255, 255, 255, 0.8);
+                padding: 2rem;
+                border-radius: 20px;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                max-width: 1000px;
+                margin: 2rem auto;
+            }
+            .goals-text {
+                color: black;
+                font-size: 18px;
+                line-height: 1.6;
+            }
+            h1, h2, h3 {
+                color: black;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # Centered and Black Water-Saving Goals Header
+    st.markdown("<h1 style='text-align:center; color:black;'>🌍 Water-Saving Goals</h1>", unsafe_allow_html=True)
+
+    # Embed first image (Kids in Yard)
+    st.image("static/Kids_in_Yard.jpg", use_column_width=True, caption="Learning Rainwater Collection")
+
+    # Floating Card with Water Goals Text
+    st.markdown("""
+    <div class="goals-card">
+    <div class="goals-text">
+
     ### Our Journey to Building Water Habits for Kids 🌱
     
     Our team started this project with one simple question:  
@@ -236,6 +269,18 @@ elif page == "goals":
     Every part of the app — from personalized tips, to eco-stories, to visual games — was designed with one idea in mind:  
     **Small habits today build responsible citizens tomorrow.**
 
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Embed second image (Kids in Bathroom)
+    st.image("static/Kids_in_Bathroom.jpg", use_column_width=True, caption="Practicing Water-Saving at Home")
+
+    # Floating Card with rest of Water Goals Text
+    st.markdown("""
+    <div class="goals-card">
+    <div class="goals-text">
+
     ### Why We Created Water Goals 🎯
     As we refined our app, we realized that **setting a goal** gives children a sense of ownership over their habits.  
     A child who pledges to "Turn off the tap while brushing" for a week feels proud of their commitment and is more likely to carry the habit forward.
@@ -252,8 +297,10 @@ elif page == "goals":
     
     We believe that when children understand they can make a difference, they grow up knowing their actions matter.  
     And with millions of small heroes around the world, the future of water can be brighter for all.
-    """)
 
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ---- TIPS TAB ----
 elif page == "tips":

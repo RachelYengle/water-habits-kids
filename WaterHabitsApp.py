@@ -148,14 +148,11 @@ elif page == "about":
                 font-size: 18px;
                 line-height: 1.6;
             }
-            h1 {
-                color: black;
-            }
         </style>
     """, unsafe_allow_html=True)
 
-    # Centered header
-    st.markdown("<h1 style='text-align:center;'>👨‍🏫 About Us</h1>", unsafe_allow_html=True)
+    # Centered and Black About Us Header
+    st.markdown("<h1 style='text-align:center; color:black;'>👨‍🏫 About Us</h1>", unsafe_allow_html=True)
 
     # Load the images
     sjsu_b64  = img_to_base64("static/sjsu_logo.png")

@@ -136,54 +136,91 @@ elif page == "about":
     # Set background image same as home
     set_background("static/Background.jpg")
 
-    # Add custom styles for About Us
+    # === Load images first (Base64) ===
+    sjsu_b64 = img_to_base64("static/sjsu_logo.png")
+    photo_b64 = img_to_base64("static/Photo4.jpg")
+
+    # === Custom Styles ===
     st.markdown("""
         <style>
+            /* Fade-in Animation */
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .about-card, .about-image {
+                animation: fadeIn 1.5s ease-out;
+            }
+
             .about-card {
-                background-color: rgba(255, 255, 255, 0.8); /* white with 80% opacity */
+                background-color: rgba(255, 255, 255, 0.8);
                 padding: 2rem;
                 border-radius: 20px;
                 box-shadow: 0 8px 16px rgba(0,0,0,0.2);
                 max-width: 1000px;
                 margin: 2rem auto;
             }
+
             .about-text {
                 color: black;
                 font-size: 18px;
                 line-height: 1.6;
             }
+
+            h1, h2, h3 {
+                color: black;
+            }
+
+            .about-image-caption {
+                text-align: center;
+                color: #003344;
+                font-weight: bold;
+                margin-top: 10px;
+                font-size: 18px;
+            }
+
+            .about-image {
+                width: 100%;
+                border-radius: 15px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                margin-bottom: 20px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            /* Hover Zoom Effect */
+            .about-image:hover {
+                transform: scale(1.03);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            }
         </style>
     """, unsafe_allow_html=True)
 
-    # Centered and Black About Us Header
+    # === About Us Header ===
     st.markdown("<h1 style='text-align:center; color:black;'>👨‍🏫 About Us</h1>", unsafe_allow_html=True)
 
-    # Load the images
-    sjsu_b64  = img_to_base64("static/sjsu_logo.png")
-    photo_b64 = img_to_base64("static/Photo4.jpg")
-
-    # Side-by-side layout for logo and team photo
+    # === Side-by-side layout for SJSU logo and Team Photo ===
     col1, col2 = st.columns([1, 3])
 
     with col1:
         st.markdown(f"""
         <div style="text-align:center;">
-            <img src="data:image/png;base64,{sjsu_b64}" style="width:100px;">
+            <img src="data:image/png;base64,{sjsu_b64}" class="about-image" style="width:100px;">
         </div>
         """, unsafe_allow_html=True)
 
     with col2:
         st.markdown(f"""
         <div style="text-align:center;">
-            <img src="data:image/jpeg;base64,{photo_b64}" style="width:100%; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
-            <p style="margin-top:10px; font-size:16px; font-weight:bold; color:#004466;">
+            <img src="data:image/jpeg;base64,{photo_b64}" class="about-image">
+            <div class="about-image-caption">
                 Front Row (L–R): Andy Nguyen, Bella Le, Gisselle Picho<br>
                 Back Row (L–R): Rachel Yengle, Shreya Sobti
-            </p>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
-    # Floating Card with About Us Text
+    # === Floating Card with About Us Text ===
     st.markdown("""
     <div class="about-card">
     <div class="about-text">

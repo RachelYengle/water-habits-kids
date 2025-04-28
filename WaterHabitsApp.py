@@ -820,27 +820,37 @@ div[data-baseweb="slider"] > div > div > div > div {
     else:
         st.markdown("<div class='custom-info'>📝 No tips yet — generate one above!</div>", unsafe_allow_html=True)
 
+
+
 # ---- STORY PAGE ----
 elif page == "story":
     set_background("static/Background.jpg")
 
-    # ---- BUTTON & PAGE STYLING ----
+    # --- CORRECT BUTTON + TEXT STYLING ---
     st.markdown("""
     <style>
-    /* Fix All Buttons Navy Blue with White Text */
+    /* BUTTON BACKGROUND + TEXT FIX */
     .stButton>button {
-        background-color: #0a4c86;
-        color: white !important;
+        background-color: #0a4c86; /* Navy blue background */
+        color: white !important;  /* Force white text on button */
         font-weight: bold;
         border-radius: 10px;
         padding: 0.5rem 1.5rem;
     }
 
+    /* Fix inside text span */
+    .stButton>button > div {
+        color: white !important;
+        font-weight: bold;
+    }
+
+    /* Fix any span inside button */
     .stButton>button span {
         color: white !important;
         font-weight: bold;
     }
 
+    /* Button hover effect */
     .stButton>button:hover {
         background-color: #083d6d;
     }
@@ -875,6 +885,7 @@ elif page == "story":
     }
     </style>
     """, unsafe_allow_html=True)
+
 
     # ---- BUBBLE ANIMATION ----
     unique_id = random.randint(1, 999999)

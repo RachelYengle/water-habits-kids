@@ -3,9 +3,8 @@
 import streamlit as st
 import pandas as pd
 import base64, pathlib
-import re
-from openai import OpenAI
 import random
+from openai import OpenAI
 
 # ---- CONFIG ----
 st.set_page_config(page_title="Water Habits for Kids", layout="wide")
@@ -31,34 +30,23 @@ def set_background(image_file):
     """
     st.markdown(css, unsafe_allow_html=True)
 
-# ---- BASE64 IMAGE LOADER ----
+# ---- IMAGE BASE64 ENCODER ----
 def img_to_base64(path):
     return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
 
 # ---- SESSION STATE ----
 if 'tips_used' not in st.session_state:
     st.session_state.tips_used = 0
-if "page" not in st.session_state:
-    st.session_state.page = "home"
 if 'last_tip' not in st.session_state:
     st.session_state.last_tip = ""
 if 'tip_history' not in st.session_state:
     st.session_state.tip_history = []
+if 'page' not in st.session_state:
+    st.session_state.page = "home"
 
-# ---- PAGE SELECTION ----
-page = st.session_state.page
-
-# ---- GLOBAL NAVBAR STYLE ----
+# ---- GLOBAL CARD STYLE ----
 st.markdown("""
     <style>
-        .topnav {
-            background-color: #cceeff;
-            padding: 10px 30px;
-            border-radius: 0 0 15px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
         .feature-card {
             background-color: rgba(255, 255, 255, 0.85);
             color: #003344;
@@ -71,18 +59,6 @@ st.markdown("""
         .feature-card:hover {
             transform: scale(1.02);
         }
-        .nav-btn {
-            background: none;
-            border: none;
-            color: #004466;
-            font-size: 18px;
-            font-weight: bold;
-            margin: 0 15px;
-            cursor: pointer;
-        }
-        .nav-btn:hover {
-            text-decoration: underline;
-        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -93,69 +69,82 @@ with col_logo:
     st.image("static/Logo.png", width=120)
 
 with col_nav:
-    selected_tab = st.selectbox(
-        "",
-        ("🏠 Home", "👨‍🏫 About Us", "💧 Water Goals"),
-        index=["home", "about", "goals"].index(st.session_state.get("page", "home")),
-        key="main_nav"
-    )
+    nav_choice = st.columns(3)
 
-# Map selected tab to correct page key
-page_map = {
-    "🏠 Home": "home",
-    "👨‍🏫 About Us": "about",
-    "💧 Water Goals": "goals"
-}
-st.session_state.page = page_map[selected_tab]
+    with nav_choice[0]:
+        if st.button("🏠 Home", key="home_btn"):
+            st.session_state.page = "home"
+    with nav_choice[1]:
+        if st.button("👨‍🏫 About Us", key="about_btn"):
+            st.session_state.page = "about"
+    with nav_choice[2]:
+        if st.button("💧 Water Goals", key="goals_btn"):
+            st.session_state.page = "goals"
+
+# ---- Inject NAVIGATION STYLE ----
+st.markdown("""
+    <style>
+        div.stButton > button {
+            background-color: #0a4c86;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+            height: 50px;
+            width: 100%;
+            border: none;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        div.stButton > button:hover {
+            background-color: #1565c0;
+            transform: scale(1.05);
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# ---- PAGE SELECTION ----
 page = st.session_state.page
 
-# ---- HOME ----
-if page == "home":
-    set_background("static/Background.jpg")
+# ---- BUBBLE ANIMATION ----
+unique_id = random.randint(1, 999999)  # Unique id for each bubble load
 
-    # Bubble CSS and Animation (for Home page too)
-    st.markdown("""
-        <style>
-            /* Bubble Animation */
-            .bubble {
-                position: absolute;
-                bottom: -50px;
-                border-radius: 50%;
+# Inject bubble animation and CSS
+st.markdown(f"""
+    <style>
+        .bubble {{
+            position: absolute;
+            bottom: -50px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: bubbleUp 10s forwards;
+            z-index: 0;
+        }}
+
+        @keyframes bubbleUp {{
+            0% {{
+                transform: translateY(0) scale(0.8);
                 opacity: 0.8;
-                animation: bubbleUp 9s forwards;
-                z-index: 0;
-            }
+            }}
+            100% {{
+                transform: translateY(-1200px) scale(1.5);
+                opacity: 0;
+            }}
+        }}
 
-            @keyframes bubbleUp {
-                0% {
-                    transform: translateY(0) scale(0.8);
-                    opacity: 0.9;
-                }
-                100% {
-                    transform: translateY(-1200px) scale(1.5);
-                    opacity: 0;
-                }
-            }
+        .bubble-container {{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }}
+    </style>
 
-            .bubble-container {
-                position: fixed;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                pointer-events: none;
-                top: 0;
-                left: 0;
-                z-index: 0;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Unique animation ID on each render
-    unique_id = random.randint(1, 999999)
-
-    # Dynamic bubbles with unique id
-    st.markdown(f"""
-    <div class="bubble-container" id="bubbles-{unique_id}">
+    <div class="bubble-container" id="bubble-{unique_id}">
         <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
         <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
         <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
@@ -165,9 +154,12 @@ if page == "home":
         <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
         <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
     </div>
-    """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
-    # Welcome text and two feature cards
+# ---- HOME ----
+if page == "home":
+    set_background("static/Background.jpg")
+
     st.markdown("<br><h1 style='text-align:center; color:#003344;'>💧 Welcome to Water Habits for Kids</h1>", unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
@@ -179,7 +171,7 @@ if page == "home":
             <p>Fun, personalized tips for kids to build daily conservation habits.</p>
         """, unsafe_allow_html=True)
         if st.button("Start Tips", key="start_tips"):
-            st.query_params["page"] = "tips"
+            st.session_state.page = "tips"
         st.markdown("</div>", unsafe_allow_html=True)
 
     with col2:
@@ -189,7 +181,7 @@ if page == "home":
             <p>Interactive story and comic adventure to save water together!</p>
         """, unsafe_allow_html=True)
         if st.button("Start Story", key="start_story"):
-            st.query_params["page"] = "story"
+            st.session_state.page = "story"
         st.markdown("</div>", unsafe_allow_html=True)
 
 # ---- ABOUT US ----
@@ -200,7 +192,7 @@ elif page == "about":
     sjsu_b64 = img_to_base64("static/sjsu_logo.png")
     photo_b64 = img_to_base64("static/Photo4.jpg")
 
-    # Bubble Animation CSS
+    # ---- Custom Fade-In Styles (ONLY card & images fade, NOT bubbles)
     st.markdown("""
     <style>
         /* Fade-in Animation */
@@ -209,7 +201,6 @@ elif page == "about":
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Floating Card Styling */
         .about-card, .about-image {
             animation: fadeIn 1.5s ease-out;
         }
@@ -253,90 +244,15 @@ elif page == "about":
             transform: scale(1.03);
             box-shadow: 0 8px 20px rgba(0,0,0,0.25);
         }
-
-        /* Bubble Animation */
-        .bubble {
-            position: absolute;
-            bottom: -50px;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: bubbleUp 9s forwards;
-            z-index: 0;
-        }
-
-        @keyframes bubbleUp {
-            0% {
-                transform: translateY(0) scale(0.8);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(-1200px) scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        .bubble-container {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
     </style>
     """, unsafe_allow_html=True)
 
-    # Unique animation ID on each render
-    unique_id = random.randint(1, 999999)
-
-    # Dynamic bubbles with unique id
-    st.markdown(f"""
-    <div class="bubble-container" id="bubbles-{unique_id}">
-        <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
-        <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
-        <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
-        <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
-        <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
-        <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
-        <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
-        <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Floating Back to Top Button
-    st.markdown("""
-    <style>
-    .back-to-top {
-        position: fixed;
-        bottom: 40px;
-        right: 30px;
-        background-color: #007acc;
-        color: white;
-        padding: 10px 15px;
-        border-radius: 50px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 18px;
-        cursor: pointer;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-        z-index: 9999;
-        transition: background-color 0.3s ease;
-    }
-    .back-to-top:hover {
-        background-color: #005f99;
-    }
-    </style>
-
-    <a href="#" class="back-to-top">↑</a>
-    """, unsafe_allow_html=True)
-
-    # About Us Header
+    # ---- About Us Header
     st.markdown("<h1 style='text-align:center; color:black;'>👨‍🏫 About Us</h1>", unsafe_allow_html=True)
 
-    # Logo and Team Photo side-by-side
+    # ---- Side-by-side layout for logo and photo
     col1, col2 = st.columns([1, 3])
+
     with col1:
         st.markdown(f"""
         <div style="text-align:center;">
@@ -355,7 +271,7 @@ elif page == "about":
         </div>
         """, unsafe_allow_html=True)
 
-    # Floating Card with Text
+    # ---- Floating Card Text
     st.markdown("""
     <div class="about-card">
     <div class="about-text">
@@ -364,8 +280,7 @@ elif page == "about":
 
     🌍 **Our Mission:**  
     Our mission is to inspire young minds to become lifelong champions of water conservation.  
-    We believe that children are not just the leaders of tomorrow — they are powerful change-makers today.  
-    Through fun, interactive learning, we aim to nurture a sense of responsibility, creativity, and care for our planet’s most precious resource: water.  
+    We believe that children are not just the leaders of tomorrow — they are powerful change-makers today. Through fun, interactive learning, we aim to nurture a sense of responsibility, creativity, and care for our planet’s most precious resource: water.  
     By making sustainability exciting and accessible, we hope to plant seeds of awareness that grow into a future where every drop counts.
 
     ✨ **About Water Habits for Kids:**  
@@ -394,16 +309,14 @@ elif page == "goals":
     yard_img_b64 = img_to_base64("static/Kids_in_Yard.jpg")
     bathroom_img_b64 = img_to_base64("static/Kids_in_Bathroom.jpg")
 
-    # Bubble Animation CSS
+    # Floating card + image styles (no bubble CSS because it's already injected globally)
     st.markdown("""
     <style>
-        /* Fade-in Animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Floating Card Styling */
         .goals-card, .goal-image {
             animation: fadeIn 1.5s ease-out;
         }
@@ -421,10 +334,6 @@ elif page == "goals":
             color: black;
             font-size: 18px;
             line-height: 1.6;
-        }
-
-        h1, h2, h3 {
-            color: black;
         }
 
         .goal-image {
@@ -448,88 +357,16 @@ elif page == "goals":
             font-size: 18px;
         }
 
-        /* Bubble Animation */
-        .bubble {
-            position: absolute;
-            bottom: -50px;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: bubbleUp 9s forwards;
-            z-index: 0;
-        }
-
-        @keyframes bubbleUp {
-            0% {
-                transform: translateY(0) scale(0.8);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(-1200px) scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        .bubble-container {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            top: 0;
-            left: 0;
-            z-index: 0;
+        h1, h2, h3 {
+            color: black;
         }
     </style>
     """, unsafe_allow_html=True)
 
-    # Unique animation ID on each render
-    unique_id = random.randint(1, 999999)
-
-    # Dynamic bubbles with unique id
-    st.markdown(f"""
-    <div class="bubble-container" id="bubbles-{unique_id}">
-        <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
-        <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
-        <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
-        <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
-        <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
-        <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
-        <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
-        <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Floating Back to Top Button
-    st.markdown("""
-    <style>
-    .back-to-top {
-        position: fixed;
-        bottom: 40px;
-        right: 30px;
-        background-color: #007acc;
-        color: white;
-        padding: 10px 15px;
-        border-radius: 50px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 18px;
-        cursor: pointer;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-        z-index: 9999;
-        transition: background-color 0.3s ease;
-    }
-    .back-to-top:hover {
-        background-color: #005f99;
-    }
-    </style>
-
-    <a href="#" class="back-to-top">↑</a>
-    """, unsafe_allow_html=True)
-
-    # Page Header
+    # Water-Saving Goals Header
     st.markdown("<h1 style='text-align:center; color:black;'>🌍 Water-Saving Goals</h1>", unsafe_allow_html=True)
 
-    # First Image (Kids in Yard)
+    # First Image
     st.markdown(f"""
     <div style="text-align:center;">
         <img src="data:image/jpeg;base64,{yard_img_b64}" class="goal-image">
@@ -543,32 +380,27 @@ elif page == "goals":
     <div class="goals-text">
 
     ### Our Journey to Building Water Habits for Kids 🌱
-    
+
     Our team started this project with one simple question:  
     *How can we teach young children the importance of water conservation in a way that truly sticks?*
-    
-    As we explored this question, we realized that while there were many resources for adults, there were very few tools designed specifically for kids — especially tools that made saving water feel **fun**, **personal**, and **empowering**.  
-    We saw an opportunity to create something new: an interactive experience where kids could learn through storytelling, games, and real-life action.
+
+    We realized that while many resources exist for adults, few tools truly engage children — especially through fun and empowerment.
 
     ### Understanding the Problem 🚰
-    We spent time researching environmental education methods, behavior-change psychology, and how children best develop daily habits.  
-    Key insights included:
-    - Kids respond better to **short, simple actions** they can control.
-    - **Positive reinforcement** and visual progress tracking (like badges and pledges) increase motivation.
-    - Stories and characters help children **relate emotionally** to causes like water conservation.
-    
-    These findings shaped our goal: to build an app that doesn’t just tell kids about water — it **invites them to become water heroes** through everyday choices.
+    - Kids respond better to **short, achievable actions** they can control.
+    - **Positive reinforcement** boosts motivation.
+    - **Stories and characters** help emotional connection.
+
+    These insights shaped our goal: an interactive app where kids don't just learn — they **become water heroes**.
 
     ### Building the Solution 💡
-    We developed **Water Habits for Kids** to make water-saving easy, engaging, and meaningful.  
-    Every part of the app — from personalized tips, to eco-stories, to visual games — was designed with one idea in mind:  
-    **Small habits today build responsible citizens tomorrow.**
+    **Water Habits for Kids** is designed to make small daily conservation habits fun and meaningful.
 
     </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Second Image (Kids in Bathroom)
+    # Second Image
     st.markdown(f"""
     <div style="text-align:center;">
         <img src="data:image/jpeg;base64,{bathroom_img_b64}" class="goal-image">
@@ -582,21 +414,16 @@ elif page == "goals":
     <div class="goals-text">
 
     ### Why We Created Water Goals 🎯
-    As we refined our app, we realized that **setting a goal** gives children a sense of ownership over their habits.  
-    A child who pledges to "Turn off the tap while brushing" for a week feels proud of their commitment and is more likely to carry the habit forward.
+    Setting a goal gives kids ownership and pride in saving water!
 
-    That’s why we built the **Water Goals** feature:
-    - To help children **choose one simple action**.
-    - To **track their progress** over days and weeks.
-    - To **celebrate success** and reinforce positive behavior.
-    
-    Every pledge made is a small promise — but together, these promises ripple outward to create a lasting impact on families, communities, and the planet.
+    - Children pick one small daily action.
+    - They track progress.
+    - They celebrate success.
 
     ### Our Mission 🌎
-    Our mission is to empower young generations to protect water through everyday action — starting with one small, achievable goal at a time.
-    
-    We believe that when children understand they can make a difference, they grow up knowing their actions matter.  
-    And with millions of small heroes around the world, the future of water can be brighter for all.
+    To empower young generations to protect water through everyday choices — one small, joyful goal at a time.
+
+    👉 Thank you for being part of the change! 🌱
 
     </div>
     </div>
@@ -606,49 +433,22 @@ elif page == "goals":
 elif page == "tips":
     set_background("static/Background.jpg")
 
-    # Bubble Animation CSS
+    # Bubble animation already global
+    # Only light fade-in for content if needed (optional)
+
     st.markdown("""
-    <style>
-        /* Bubble Animation */
-        .bubble {
-            position: absolute;
-            bottom: -50px;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: bubbleUp 9s forwards;
-            z-index: 0;
+        <style>
+        /* Tips page clean style */
+        .stApp {
+            background-color: #d6f9ff;
         }
 
-        @keyframes bubbleUp {
-            0% {
-                transform: translateY(0) scale(0.8);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(-1200px) scale(1.5);
-                opacity: 0;
-            }
+        .custom-header, .custom-subheader {
+            color: #002244 !important;
         }
 
-        .bubble-container {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
-
-        /* Style for all text labels */
-        .stSlider > div[data-baseweb="slider"] > div > div {
-            color: black !important;
-            font-weight: bold !important;
-        }
-
-        .stTextInput label, .stSelectbox label {
-            color: black !important;
+        label, .stTextInput>label, .stSlider>label, .stSelectbox>label {
+            color: #002244 !important;
             font-weight: bold !important;
         }
 
@@ -660,45 +460,34 @@ elif page == "tips":
             font-weight: bold;
         }
 
-        .stDownloadButton > button, .stButton > button {
-            background-color: #007acc;
+        /* Button styling navy */
+        .stButton>button {
+            background-color: #0a4c86;
             color: white;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 10px;
+            padding: 0.5rem 1.5rem;
+        }
+        .stButton>button:hover {
+            background-color: #083d6d;
         }
 
-        .stButton > button:hover {
-            background-color: #005f99;
+        /* Child age slider dark navy text */
+        .stSlider>div>div>div>div {
+            color: black;
         }
-    </style>
+        </style>
     """, unsafe_allow_html=True)
 
-    # Unique animation ID on each render
-    unique_id = random.randint(1, 999999)
-
-    # Dynamic bubbles with unique id
-    st.markdown(f"""
-    <div class="bubble-container" id="bubbles-{unique_id}">
-        <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
-        <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
-        <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
-        <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
-        <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
-        <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
-        <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
-        <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Title
-    st.markdown("<h2 style='text-align:center; color:black;'>💡 Personalized Water-Saving Tip</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 class='custom-header'>💡 Personalized Water-Saving Tip</h2>", unsafe_allow_html=True)
 
     # Input fields
     child_name = st.text_input("👶 Child's Name")
-    child_age = st.slider("🎂 Child's Age", 3, 12, 6)
+
+    child_age = st.slider("🎂 Child's Age", min_value=3, max_value=12, value=6)
+
     routine = st.selectbox("🛁 Which routine?", ["Brushing Teeth", "Washing Hands", "Showering", "Bath Time", "Other"])
 
-    # Function for Age Group
     def get_age_group(age):
         if 3 <= age <= 5:
             return "3–5"
@@ -708,12 +497,13 @@ elif page == "tips":
             return "9–12"
 
     # Generate Tip Button
-    if st.button("Generate Tip"):
+    if st.button("✨ Generate Tip"):
         if not child_name:
             st.warning("⚠️ Please enter your child's name.")
         else:
             age_group = get_age_group(child_age)
             filtered = tips_df[(tips_df['age_group'] == age_group) & (tips_df['routine'] == routine)]
+
             if not filtered.empty:
                 row = filtered.sample(1).iloc[0]
                 base = row['kid_friendly_phrase']
@@ -743,11 +533,12 @@ elif page == "tips":
             except Exception as e:
                 st.error(f"API error: {e}")
 
-    # Tip History / Progress
+    # Tip History & Download
     if st.session_state.tips_used > 0:
-        st.markdown("<h3 style='text-align:center; color:black;'>📊 Tip Progress</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 class='custom-subheader'>📊 Tip Progress</h3>", unsafe_allow_html=True)
         st.write(f"✅ Tips Generated: {st.session_state.tips_used}")
         st.markdown(f"<div class='most-recent'>💡 <strong>Most Recent Tip:</strong> {st.session_state.last_tip}</div>", unsafe_allow_html=True)
+
         tips_text = "\n".join(st.session_state.tip_history)
         st.download_button("📥 Download All My Tips", tips_text, file_name="water_tips_summary.txt")
     else:
@@ -757,49 +548,25 @@ elif page == "tips":
 elif page == "story":
     set_background("static/Background.jpg")
 
-    # Bubble Animation CSS
+    # Page styling
     st.markdown("""
     <style>
-        /* Bubble Animation */
-        .bubble {
-            position: absolute;
-            bottom: -50px;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: bubbleUp 9s forwards;
-            z-index: 0;
+        .stApp {
+            background-color: #d6f4ff;
         }
 
-        @keyframes bubbleUp {
-            0% {
-                transform: translateY(0) scale(0.8);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(-1200px) scale(1.5);
-                opacity: 0;
-            }
+        h1, h2, h3, h4, .stMarkdown, p {
+            color: #002244 !important;
         }
 
-        .bubble-container {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            top: 0;
-            left: 0;
-            z-index: 0;
+        label, .stTextInput>label, .stSelectbox>label {
+            color: #002244 !important;
+            font-weight: bold !important;
         }
 
-        /* General Text Styling */
-        h1, h2, h3, h4, label, p, .stMarkdown {
-            color: black !important;
-            font-weight: bold;
-        }
-
+        /* Buttons navy blue */
         .stButton>button {
-            background-color: #007acc;
+            background-color: #0a4c86;
             color: white;
             font-weight: bold;
             padding: 0.5rem 1.5rem;
@@ -807,57 +574,63 @@ elif page == "story":
         }
 
         .stButton>button:hover {
-            background-color: #005f99;
+            background-color: #083d6d;
+        }
+
+        .stExpanderHeader {
+            color: #002244 !important;
+            font-weight: bold;
         }
     </style>
     """, unsafe_allow_html=True)
 
-    # Unique animation ID on each render
-    unique_id = random.randint(1, 999999)
+    # Story Page Header
+    st.header("📖 Eco Story Adventure + Game")
 
-    # Dynamic bubbles with unique id
-    st.markdown(f"""
-    <div class="bubble-container" id="bubbles-{unique_id}">
-        <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
-        <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
-        <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
-        <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
-        <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
-        <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
-        <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
-        <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Title
-    st.markdown("<h1 style='text-align:center;'>📖 Eco Story Adventure + Game</h1>", unsafe_allow_html=True)
-
-    # Inputs
+    # Inputs for the story
     hero = st.text_input("🧒 Hero’s Name", placeholder="e.g., Andy")
+
     setting = st.selectbox("🌍 Choose a Story Setting", ["bathroom", "garden", "school", "beach", "forest"])
+
     habit = st.selectbox("💧 Water Habit Focus", ["brushing teeth", "watering plants", "taking showers", "fixing leaks"])
 
-    # Settings
     with st.expander("⚙️ Game Settings"):
         theme = st.radio("🎨 Visual Theme", ["Blue Drop", "Nature Kids", "Clean City", "Water Warriors"])
         hint_mode = st.checkbox("💡 Show Helpful Hints", value=True)
 
-    # Theme color map
+    # Theme background
     theme_styles = {
         "Blue Drop": {"background": "#e1f5fe", "button": "#0288d1"},
         "Nature Kids": {"background": "#e8f5e9", "button": "#388e3c"},
         "Clean City": {"background": "#eeeeee", "button": "#616161"},
         "Water Warriors": {"background": "#fbe9e7", "button": "#e64a19"}
     }
+
     style = theme_styles.get(theme, theme_styles["Blue Drop"])
 
-    # Button to Generate
+    # Override background for this theme
+    st.markdown(f"""
+    <style>
+        .stApp {{
+            background-color: {style["background"]};
+        }}
+        .stButton>button {{
+            background-color: {style["button"]};
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+        }}
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Generate Story Button
     if st.button("✨ Generate My Eco Adventure"):
         with st.spinner("Creating your story and game..."):
             story_prompt = (
                 f"Write a fun children's story about {hero}, a young eco-hero in the {setting}, "
                 f"learning to save water by practicing {habit}. Include a friendly sidekick and end with a water-saving tip."
             )
+
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -867,10 +640,17 @@ elif page == "story":
                 max_tokens=800,
                 temperature=0.8
             )
+
             story = response.choices[0].message.content.strip()
 
-            # Game Challenges
-            rules = {
+            # Display Story
+            st.subheader("📘 Your Personalized Story")
+            st.markdown(f"**{hero}'s Adventure in the {setting.capitalize()}**")
+            st.write(story)
+
+            # Game Rules Section
+            st.subheader("🎮 Your Water-Saving Game")
+            game_rules = {
                 "brushing teeth": {
                     "challenge": "🪥 Tap to turn off the faucet while brushing.",
                     "goal": "Save 10 gallons by acting quickly!",
@@ -893,69 +673,49 @@ elif page == "story":
                 }
             }
 
-            game = rules.get(habit.lower(), {
+            game = game_rules.get(habit.lower(), {
                 "challenge": "💧 Make a smart water-saving choice!",
                 "goal": "Reduce waste and become an Eco Hero!",
                 "points": "+5 per smart move."
             })
 
-            # Display Story
-            st.subheader("📘 Your Personalized Story")
-            st.markdown(f"**{hero}'s Adventure in the {setting.capitalize()}**")
-            st.write(story)
-
-            # Display Game
-            st.subheader("🎮 Your Water-Saving Game")
             st.markdown(f"**Challenge:** {game['challenge']}")
             st.markdown(f"**Goal:** {game['goal']}")
             st.markdown(f"**Scoring:** {game['points']}")
 
+            # Helpful Hints
             if hint_mode:
                 with st.expander("💡 Tips & Tricks"):
                     st.markdown("""
-                    - Turn off taps while brushing your teeth.  
-                    - Keep showers short and sweet.  
-                    - Fix leaky faucets right away.  
-                    - Water plants early or late to reduce evaporation.  
-                    - Use buckets instead of hoses when cleaning.
+- Turn off taps while brushing your teeth.  
+- Keep showers short and sweet.  
+- Fix leaky faucets quickly.  
+- Water plants early morning or evening.  
+- Use buckets instead of hoses when cleaning.
                     """)
 
-            # Comic Panels Generation
+            # Comic Scene Generation
             st.subheader("🎬 Your Eco Adventure Comic")
-            scene_prompt = (
-                f"You are a comic artist turning this children's story into a 4 to 6 panel comic. "
-                f"For each panel, number them clearly (1. 2. 3...), and describe the scene visually in 1–2 sentences. "
-                f"Make sure each panel has a new line and starts with a number. Incorporate this theme into the scene visuals: '{theme}'.\n\n"
-                f"Story:\n{story}"
+            comic_prompt = (
+                f"You are a comic artist turning this children's story into a 4-6 panel comic. "
+                f"Number each panel and describe each scene visually, 1–2 sentences per panel. "
+                f"Apply this theme: {theme}. Story:\n{story}"
             )
 
-            with st.spinner("Breaking the story into comic scenes..."):
-                scene_response = client.chat.completions.create(
-                    model="gpt-4",
-                    messages=[{"role": "user", "content": scene_prompt}]
-                )
-                scene_text = scene_response.choices[0].message.content.strip()
+            comic_response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[{"role": "user", "content": comic_prompt}]
+            )
+
+            scene_text = comic_response.choices[0].message.content.strip()
 
             import re
-            panel_descriptions = re.findall(r'\d\.\s.*?(?=\n\d\.|\Z)', scene_text, re.DOTALL)[:6]
+            panel_descriptions = re.findall(r'\d\.\s.*?(?=\n\d\.|\Z)', scene_text, re.DOTALL)
 
             if panel_descriptions:
                 for i, panel in enumerate(panel_descriptions, start=1):
                     panel_cleaned = re.sub(r"^\d+\.\s*", "", panel.strip())
                     st.markdown(f"**Panel {i}:** {panel_cleaned}")
-                    with st.spinner(f"Generating image for Panel {i}..."):
-                        try:
-                            panel_img_response = client.images.generate(
-                                prompt=f"Comic panel in theme of '{theme}': {panel_cleaned}",
-                                n=1,
-                                size="512x512"
-                            )
-                            image_url = panel_img_response.data[0].url
-                            st.image(image_url, caption=f"Panel {i}")
-                        except Exception:
-                            st.warning(f"⚠️ Could not load image for Panel {i}.")
-                            st.text(f"Panel description: {panel_cleaned}")
             else:
-                st.warning("⚠️ GPT did not return clearly numbered scenes.")
-                st.markdown("Here is the raw output from GPT:")
+                st.warning("⚠️ Could not parse comic panels. Here is raw text:")
                 st.code(scene_text)

@@ -34,23 +34,6 @@ def set_background(image_file):
 def img_to_base64(path):
     return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
 
-sjsu_b64  = img_to_base64("static/sjsu_logo.png")
-photo_b64 = img_to_base64("static/Photo4.jpg")
-
-st.markdown(f"""
-<div style="text-align:center;">
-    <img src="data:image/png;base64,{sjsu_b64}" style="width:200px;">
-</div>
-
-<div style="text-align:center; margin-top:20px;">
-    <img src="data:image/jpeg;base64,{photo_b64}" style="width:80%; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
-    <p style="margin-top:10px; font-size:16px; font-weight:bold; color:#004466;">
-        Front Row (L–R): Andy Nguyen, Bella Le, Gisselle Picho<br>
-        Back Row (L–R): Rachel Yengle, Shreya Sobti
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
 # ---- SESSION STATE ----
 if 'tips_used' not in st.session_state:
     st.session_state.tips_used = 0
@@ -146,28 +129,35 @@ if page == "home":
 
 # ---- ABOUT US ----
 elif page == "about":
-    st.header("👨‍🏫 About Us")
+    # Centered About Us header
+    st.markdown("<h1 style='text-align:center;'>👨‍🏫 About Us</h1>", unsafe_allow_html=True)
 
-    # Display SJSU logo
-    st.markdown("""
-        <div style="text-align: center;">
-            <img src="static/sjsu_logo.png" alt="SJSU Logo" style="width: 200px; margin-bottom: 20px;">
+    # Load the images
+    sjsu_b64  = img_to_base64("static/sjsu_logo.png")
+    photo_b64 = img_to_base64("static/Photo4.jpg")
+
+    # Side-by-side layout: Logo | Team Photo
+    col1, col2 = st.columns([1, 3])  # 1/3 width for logo, 3/3 for team photo
+
+    with col1:
+        st.markdown(f"""
+        <div style="text-align:center;">
+            <img src="data:image/png;base64,{sjsu_b64}" style="width:100px;">
         </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
-    # Display team photo and names
-    st.markdown("""
-        <div style="text-align: center;">
-            <img src="static/Photo4.jpg" alt="Team Photo" style="width: 80%; border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); margin-top: 20px;">
-            <p style="margin-top: 10px; font-size: 16px; font-weight: bold; color: #004466;">
+    with col2:
+        st.markdown(f"""
+        <div style="text-align:center;">
+            <img src="data:image/jpeg;base64,{photo_b64}" style="width:100%; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+            <p style="margin-top:10px; font-size:16px; font-weight:bold; color:#004466;">
                 Front Row (L–R): Andy Nguyen, Bella Le, Gisselle Picho<br>
                 Back Row (L–R): Rachel Yengle, Shreya Sobti
             </p>
         </div>
-        <br>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
-    # Updated About content
+    # Then About Us text
     st.markdown("""
     We’re a team of students from **San José State University** who are passionate about teaching children sustainable water habits through play and interactive storytelling.
 
@@ -178,10 +168,7 @@ elif page == "about":
 
     ✨ **About Water Habits for Kids:**  
     *Water Habits for Kids* is an educational platform created with young learners in mind.  
-    Designed for children between the ages of 3–12, it blends playful storytelling, real-world tips, and interactive challenges to make saving water a natural and enjoyable part of everyday life.  
-
-    Our approach focuses on small, achievable actions — from turning off taps to spotting leaks — helping kids see how their daily choices have a big impact.  
-    By connecting conservation to fun and imagination, we aim to build lifelong eco-friendly habits that ripple out to families, schools, and communities everywhere.
+    Designed for children between the ages of 3–12, it blends playful storytelling, real-world tips, and interactive challenges to make saving water a natural and enjoyable part of everyday life.
 
     💧 **Fun Fact:**  
     Turning off the tap while brushing your teeth can save up to 8 gallons of water every day!

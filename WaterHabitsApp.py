@@ -193,6 +193,48 @@ elif page == "about":
                 transform: scale(1.03);
                 box-shadow: 0 8px 20px rgba(0,0,0,0.25);
             }
+             /* BUBBLE ANIMATION ON PAGE LOAD */
+            .bubble {
+                position: absolute;
+                bottom: -50px;
+                background-color: rgba(173, 216, 230, 0.7);
+                border-radius: 50%;
+                opacity: 0.7;
+                animation: bubbleUp 5s forwards;
+                z-index: 0;
+            }
+
+            @keyframes bubbleUp {
+                0% {
+                    transform: translateY(0) scale(0.5);
+                    opacity: 0.7;
+                }
+                100% {
+                    transform: translateY(-1000px) scale(1.5);
+                    opacity: 0;
+                }
+            }
+
+            /* Bubble Container */
+            .bubble-container {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                pointer-events: none;
+                top: 0;
+                left: 0;
+                z-index: 0;
+            }
+</style>
+
+<div class="bubble-container">
+    <div class="bubble" style="left:10%; width:20px; height:20px;"></div>
+    <div class="bubble" style="left:30%; width:15px; height:15px;"></div>
+    <div class="bubble" style="left:50%; width:25px; height:25px;"></div>
+    <div class="bubble" style="left:70%; width:18px; height:18px;"></div>
+    <div class="bubble" style="left:85%; width:12px; height:12px;"></div>
+</div>   
         </style>
     """, unsafe_allow_html=True)
 
@@ -309,7 +351,49 @@ elif page == "goals":
             transform: scale(1.03);
             box-shadow: 0 8px 20px rgba(0,0,0,0.25);
         }
-                
+        /* BUBBLE ANIMATION ON PAGE LOAD */
+            .bubble {
+                position: absolute;
+                bottom: -50px;
+                background-color: rgba(173, 216, 230, 0.7);
+                border-radius: 50%;
+                opacity: 0.7;
+                animation: bubbleUp 5s forwards;
+                z-index: 0;
+            }
+
+            @keyframes bubbleUp {
+                0% {
+                    transform: translateY(0) scale(0.5);
+                    opacity: 0.7;
+                }
+                100% {
+                    transform: translateY(-1000px) scale(1.5);
+                    opacity: 0;
+                }
+            }
+
+            /* Bubble Container */
+            .bubble-container {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                pointer-events: none;
+                top: 0;
+                left: 0;
+                z-index: 0;
+            }
+</style>
+
+<div class="bubble-container">
+    <div class="bubble" style="left:10%; width:20px; height:20px;"></div>
+    <div class="bubble" style="left:30%; width:15px; height:15px;"></div>
+    <div class="bubble" style="left:50%; width:25px; height:25px;"></div>
+    <div class="bubble" style="left:70%; width:18px; height:18px;"></div>
+    <div class="bubble" style="left:85%; width:12px; height:12px;"></div>
+</div>   
+        </style>     
     </style>
 """, unsafe_allow_html=True)
 

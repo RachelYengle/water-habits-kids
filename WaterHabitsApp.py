@@ -279,7 +279,7 @@ elif page == "goals":
     """, unsafe_allow_html=True)
 
     # Embed second image (Kids in Bathroom)
-    sst.markdown(f"""
+    st.markdown(f"""
 <div style="text-align:center;">
     <img src="static/Kids_in_Bathroom.jpg" style="width:100%; border-radius:15px;">
     <p style="color:#003344; font-weight:bold; margin-top:10px;">Practicing Water-Saving at Home</p>

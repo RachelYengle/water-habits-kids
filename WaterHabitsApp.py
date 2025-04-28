@@ -92,21 +92,21 @@ with col_logo:
     st.image("static/Logo.png", width=120)
 
 with col_nav:
-    nav_selection = st.radio(
+    selected_tab = st.selectbox(
         "",
-        ["🏠 Home", "👨‍🏫 About Us", "💧 Water Goals"],
-        index=["home", "about", "goals"].index(st.session_state.page) if "page" in st.session_state else 0,
-        horizontal=True,
-        label_visibility="collapsed"
+        ("🏠 Home", "👨‍🏫 About Us", "💧 Water Goals"),
+        index=["home", "about", "goals"].index(st.session_state.get("page", "home")),
+        key="main_nav"
     )
 
-# Map nav selection back to a "page" string
-nav_map = {
+# Map selected tab to correct page key
+page_map = {
     "🏠 Home": "home",
     "👨‍🏫 About Us": "about",
     "💧 Water Goals": "goals"
 }
-st.session_state.page = nav_map[nav_selection]
+st.session_state.page = page_map[selected_tab]
+page = st.session_state.page
 
 # ---- HOME ----
 if page == "home":

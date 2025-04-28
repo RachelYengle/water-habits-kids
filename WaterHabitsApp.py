@@ -86,20 +86,18 @@ st.markdown("""
 
 # ---- NAV BAR ----
 col_logo, col_nav = st.columns([1, 5])
+
 with col_logo:
     st.image("static/Logo.png", width=120)
 
 with col_nav:
-    colA, colB, colC = st.columns(3)
-    with colA:
-        if st.button("🏠 Home", key="nav_home"):
-            st.query_params["page"] = "home"
-    with colB:
-        if st.button("👨‍🏫 About Us", key="nav_about"):
-            st.query_params["page"] = "about"
-    with colC:
-        if st.button("💧 Water Goals", key="nav_goals"):
-            st.query_params["page"] = "goals"
+    st.markdown("""
+    <div class="topnav">
+        <a href="/?page=home" class="nav-btn">🏠 Home</a>
+        <a href="/?page=about" class="nav-btn">👨‍🏫 About Us</a>
+        <a href="/?page=goals" class="nav-btn">💧 Water Goals</a>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ---- HOME ----
 if page == "home":
@@ -290,6 +288,33 @@ elif page == "about":
         <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Floating Back to Top Button
+    st.markdown("""
+    <style>
+    .back-to-top {
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        background-color: #007acc;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 50px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        z-index: 9999;
+        transition: background-color 0.3s ease;
+    }
+    .back-to-top:hover {
+        background-color: #005f99;
+    }
+    </style>
+
+    <a href="#" class="back-to-top">↑</a>
+    """, unsafe_allow_html=True)
 
     # About Us Header
     st.markdown("<h1 style='text-align:center; color:black;'>👨‍🏫 About Us</h1>", unsafe_allow_html=True)
@@ -345,7 +370,6 @@ elif page == "about":
     </div>
     """, unsafe_allow_html=True)
 
-# ---- WATER GOALS ----
 # ---- WATER GOALS ----
 elif page == "goals":
     set_background("static/Background.jpg")
@@ -454,6 +478,33 @@ elif page == "goals":
         <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
         <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
     </div>
+    """, unsafe_allow_html=True)
+
+    # Floating Back to Top Button
+    st.markdown("""
+    <style>
+    .back-to-top {
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        background-color: #007acc;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 50px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        z-index: 9999;
+        transition: background-color 0.3s ease;
+    }
+    .back-to-top:hover {
+        background-color: #005f99;
+    }
+    </style>
+
+    <a href="#" class="back-to-top">↑</a>
     """, unsafe_allow_html=True)
 
     # Page Header

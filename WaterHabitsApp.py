@@ -129,15 +129,40 @@ if page == "home":
 
 # ---- ABOUT US ----
 elif page == "about":
-    # Centered About Us header
+    # Set background image same as home
+    set_background("static/Background.jpg")
+
+    # Add custom styles for About Us
+    st.markdown("""
+        <style>
+            .about-card {
+                background-color: rgba(255, 255, 255, 0.8); /* white with 80% opacity */
+                padding: 2rem;
+                border-radius: 20px;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                max-width: 1000px;
+                margin: 2rem auto;
+            }
+            .about-text {
+                color: black;
+                font-size: 18px;
+                line-height: 1.6;
+            }
+            h1 {
+                color: black;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # Centered header
     st.markdown("<h1 style='text-align:center;'>👨‍🏫 About Us</h1>", unsafe_allow_html=True)
 
     # Load the images
     sjsu_b64  = img_to_base64("static/sjsu_logo.png")
     photo_b64 = img_to_base64("static/Photo4.jpg")
 
-    # Side-by-side layout: Logo | Team Photo
-    col1, col2 = st.columns([1, 3])  # 1/3 width for logo, 3/3 for team photo
+    # Side-by-side layout for logo and team photo
+    col1, col2 = st.columns([1, 3])
 
     with col1:
         st.markdown(f"""
@@ -157,8 +182,11 @@ elif page == "about":
         </div>
         """, unsafe_allow_html=True)
 
-    # Then About Us text
+    # Floating Card with About Us Text
     st.markdown("""
+    <div class="about-card">
+    <div class="about-text">
+
     We’re a team of students from **San José State University** who are passionate about teaching children sustainable water habits through play and interactive storytelling.
 
     🌍 **Our Mission:**  
@@ -179,7 +207,10 @@ elif page == "about":
     Starting with simple, fun actions, children learn that even small changes — like turning off the tap while brushing or fixing a dripping faucet — can make a big impact. Instilling these habits early builds a strong foundation of environmental responsibility, creating a ripple effect that can inspire families, classrooms, and entire communities.
 
     👉 Thank you for visiting our project — together, let's make every drop count! 🌱
-    """)
+
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ---- GOALS ----
 elif page == "goals":

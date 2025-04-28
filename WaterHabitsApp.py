@@ -663,9 +663,32 @@ elif page == "tips":
 
     st.markdown("<h2 class='custom-header'>💡 Personalized Water-Saving Tip</h2>", unsafe_allow_html=True)
 
+
     st.markdown("""
 <style>
 /* Fix child age slider numbers */
+div[data-baseweb="slider"] > div > div > div > div {
+    color: black !important;
+    font-weight: bold !important;
+}
+</style>
+""", unsafe_allow_html=True)
+    
+    st.markdown("""
+<style>
+/* Main labels (text inputs, selects) */
+label, .stTextInput>label, .stSelectbox>label {
+    color: #002244 !important;
+    font-weight: bold !important;
+}
+
+/* Child age slider main label */
+.stSlider>label {
+    color: #002244 !important;
+    font-weight: bold !important;
+}
+
+/* Child age slider range numbers ("3" and "12") */
 div[data-baseweb="slider"] > div > div > div > div {
     color: black !important;
     font-weight: bold !important;

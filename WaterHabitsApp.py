@@ -532,20 +532,56 @@ elif page == "goals":
     </div>
     """, unsafe_allow_html=True)
 
-# ---- TIPS TAB ----
+# ---- TIPS PAGE ----
 elif page == "tips":
+    set_background("static/Background.jpg")
+
+    # Bubble Animation CSS
     st.markdown("""
-        <style>
-        .stApp {
-            background-color: #d6f9ff;
+    <style>
+        /* Bubble Animation */
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: bubbleUp 9s forwards;
+            z-index: 0;
         }
-        .custom-header, .custom-subheader {
-            color: #002244 !important;
+
+        @keyframes bubbleUp {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-1200px) scale(1.5);
+                opacity: 0;
+            }
         }
-        label, .stTextInput label, .stSlider label, .stSelectbox label, .stMarkdown {
-            color: #002244 !important;
+
+        .bubble-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Style for all text labels */
+        .stSlider > div[data-baseweb="slider"] > div > div {
+            color: black !important;
             font-weight: bold !important;
         }
+
+        .stTextInput label, .stSelectbox label {
+            color: black !important;
+            font-weight: bold !important;
+        }
+
         .tip-box, .custom-info, .most-recent {
             background-color: #e0f7fa;
             color: #002244;
@@ -553,30 +589,43 @@ elif page == "tips":
             padding: 1rem;
             font-weight: bold;
         }
-        .stDownloadButton>button {
-            background-color: #0099cc;
-            color: white;
-            font-weight: bold;
-            border-radius: 8px;
-        }
-        .stButton>button {
+
+        .stDownloadButton > button, .stButton > button {
             background-color: #007acc;
             color: white;
             font-weight: bold;
             border-radius: 8px;
         }
-        .stButton>button:hover {
+
+        .stButton > button:hover {
             background-color: #005f99;
         }
-        </style>
+    </style>
     """, unsafe_allow_html=True)
 
-    st.markdown("<h2 class='custom-header'>💡 Personalized Water-Saving Tip</h2>", unsafe_allow_html=True)
-    
+    # Floating Colorful Bubbles
+    st.markdown("""
+    <div class="bubble-container">
+        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Title
+    st.markdown("<h2 style='text-align:center; color:black;'>💡 Personalized Water-Saving Tip</h2>", unsafe_allow_html=True)
+
+    # Input fields
     child_name = st.text_input("👶 Child's Name")
     child_age = st.slider("🎂 Child's Age", 3, 12, 6)
     routine = st.selectbox("🛁 Which routine?", ["Brushing Teeth", "Washing Hands", "Showering", "Bath Time", "Other"])
 
+    # Function for Age Group
     def get_age_group(age):
         if 3 <= age <= 5:
             return "3–5"
@@ -585,6 +634,7 @@ elif page == "tips":
         else:
             return "9–12"
 
+    # Generate Tip Button
     if st.button("Generate Tip"):
         if not child_name:
             st.warning("⚠️ Please enter your child's name.")
@@ -620,8 +670,9 @@ elif page == "tips":
             except Exception as e:
                 st.error(f"API error: {e}")
 
+    # Tip History / Progress
     if st.session_state.tips_used > 0:
-        st.markdown("<h3 class='custom-subheader'>📊 Tip Progress</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:center; color:black;'>📊 Tip Progress</h3>", unsafe_allow_html=True)
         st.write(f"✅ Tips Generated: {st.session_state.tips_used}")
         st.markdown(f"<div class='most-recent'>💡 <strong>Most Recent Tip:</strong> {st.session_state.last_tip}</div>", unsafe_allow_html=True)
         tips_text = "\n".join(st.session_state.tip_history)
@@ -629,21 +680,51 @@ elif page == "tips":
     else:
         st.markdown("<div class='custom-info'>📝 No tips yet — generate one above!</div>", unsafe_allow_html=True)
 
-###STORY TAB###
+# ---- STORY PAGE ----
 elif page == "story":
-    # Style for background and components
+    set_background("static/Background.jpg")
+
+    # Bubble Animation CSS
     st.markdown("""
-        <style>
-        .stApp {
-            background-color: #d6f4ff !important;
+    <style>
+        /* Bubble Animation */
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: bubbleUp 9s forwards;
+            z-index: 0;
         }
-        h1, h2, h3, h4, .stMarkdown, p {
-            color: #002244 !important;
+
+        @keyframes bubbleUp {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-1200px) scale(1.5);
+                opacity: 0;
+            }
         }
-        label, .css-17eq0hr, .stTextInput label, .stSelectbox label {
-            color: #002244 !important;
-            font-weight: bold !important;
+
+        .bubble-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            z-index: 0;
         }
+
+        /* General Text Styling */
+        h1, h2, h3, h4, label, p, .stMarkdown {
+            color: black !important;
+            font-weight: bold;
+        }
+
         .stButton>button {
             background-color: #007acc;
             color: white;
@@ -651,48 +732,56 @@ elif page == "story":
             padding: 0.5rem 1.5rem;
             border-radius: 10px;
         }
+
         .stButton>button:hover {
             background-color: #005f99;
         }
-        .stExpanderHeader {
-            color: #002244 !important;
-            font-weight: bold;
-        }
-        </style>
+    </style>
     """, unsafe_allow_html=True)
 
-    st.header("📖 Eco Story Adventure + Game")
+    # Floating Colorful Bubbles
+    st.markdown("""
+    <div class="bubble-container">
+        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Title
+    st.markdown("<h1 style='text-align:center;'>📖 Eco Story Adventure + Game</h1>", unsafe_allow_html=True)
+
+    # Inputs
     hero = st.text_input("🧒 Hero’s Name", placeholder="e.g., Andy")
     setting = st.selectbox("🌍 Choose a Story Setting", ["bathroom", "garden", "school", "beach", "forest"])
     habit = st.selectbox("💧 Water Habit Focus", ["brushing teeth", "watering plants", "taking showers", "fixing leaks"])
 
+    # Settings
     with st.expander("⚙️ Game Settings"):
         theme = st.radio("🎨 Visual Theme", ["Blue Drop", "Nature Kids", "Clean City", "Water Warriors"])
         hint_mode = st.checkbox("💡 Show Helpful Hints", value=True)
 
-    # Theme colors for comic UI
+    # Theme color map
     theme_styles = {
         "Blue Drop": {"background": "#e1f5fe", "button": "#0288d1"},
         "Nature Kids": {"background": "#e8f5e9", "button": "#388e3c"},
         "Clean City": {"background": "#eeeeee", "button": "#616161"},
         "Water Warriors": {"background": "#fbe9e7", "button": "#e64a19"}
     }
-
     style = theme_styles.get(theme, theme_styles["Blue Drop"])
-    st.markdown(f"""
-        <style>
-        .stApp {{ background-color: {style["background"]}; }}
-        .stButton>button {{ background-color: {style["button"]}; color: white; font-weight: bold; border-radius: 10px; }}
-        </style>
-    """, unsafe_allow_html=True)
 
+    # Button to Generate
     if st.button("✨ Generate My Eco Adventure"):
         with st.spinner("Creating your story and game..."):
             story_prompt = (
                 f"Write a fun children's story about {hero}, a young eco-hero in the {setting}, "
                 f"learning to save water by practicing {habit}. Include a friendly sidekick and end with a water-saving tip."
             )
-
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -702,10 +791,9 @@ elif page == "story":
                 max_tokens=800,
                 temperature=0.8
             )
-
             story = response.choices[0].message.content.strip()
 
-            # Game rules
+            # Game Challenges
             rules = {
                 "brushing teeth": {
                     "challenge": "🪥 Tap to turn off the faucet while brushing.",
@@ -735,10 +823,12 @@ elif page == "story":
                 "points": "+5 per smart move."
             })
 
+            # Display Story
             st.subheader("📘 Your Personalized Story")
             st.markdown(f"**{hero}'s Adventure in the {setting.capitalize()}**")
             st.write(story)
 
+            # Display Game
             st.subheader("🎮 Your Water-Saving Game")
             st.markdown(f"**Challenge:** {game['challenge']}")
             st.markdown(f"**Goal:** {game['goal']}")
@@ -747,14 +837,14 @@ elif page == "story":
             if hint_mode:
                 with st.expander("💡 Tips & Tricks"):
                     st.markdown("""
-- Turn off taps while brushing your teeth.  
-- Keep showers short and sweet.  
-- Fix leaky faucets right away.  
-- Water plants early or late to reduce evaporation.  
-- Use buckets instead of hoses when cleaning.
+                    - Turn off taps while brushing your teeth.  
+                    - Keep showers short and sweet.  
+                    - Fix leaky faucets right away.  
+                    - Water plants early or late to reduce evaporation.  
+                    - Use buckets instead of hoses when cleaning.
                     """)
 
-            # === Comic Scene Generation ===
+            # Comic Panels Generation
             st.subheader("🎬 Your Eco Adventure Comic")
             scene_prompt = (
                 f"You are a comic artist turning this children's story into a 4 to 6 panel comic. "
@@ -793,11 +883,3 @@ elif page == "story":
                 st.warning("⚠️ GPT did not return clearly numbered scenes.")
                 st.markdown("Here is the raw output from GPT:")
                 st.code(scene_text)
-
-elif page == "download":
-    st.header("📥 Download Your Tips")
-    if st.session_state.tip_history:
-        tips_text = "\n\n".join(st.session_state.tip_history)
-        st.download_button("Download All Tips", tips_text, file_name="water_tips_summary.txt")
-    else:
-        st.info("No tips to download yet.")

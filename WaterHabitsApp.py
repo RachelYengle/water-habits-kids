@@ -881,6 +881,21 @@ elif page == "story":
     </style>
     """, unsafe_allow_html=True)
 
+    # --- Story Page CSS ---
+    st.markdown("""
+    <style>
+    /* Button colors */
+    div.stButton > button { ... }
+    /* Hover */
+    div.stButton > button:hover { ... }
+    /* Light blue background */
+    .stApp { ... }
+    /* NEW: Fix floating cards text */
+    .story-card, .story-card p, .story-card strong, .story-card h2, .story-card h4 {
+        color: #002244 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     # ---- BUBBLE ANIMATION ----
     unique_id = random.randint(1, 999999)

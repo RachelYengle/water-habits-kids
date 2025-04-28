@@ -8,7 +8,7 @@ from openai import OpenAI
 
 # ---- CONFIG ----
 st.set_page_config(page_title="Water Habits for Kids", layout="wide")
-client = OpenAI(api_key= st.secrets["OPENAI_API_KEY"])  # Replace with your actual key
+client = OpenAI(api_key= st.secrets["OPENAI_API_KEY"]) 
 
 # ---- LOAD DATA ----
 tips_df = pd.read_csv("expanded_tips_data.csv")
@@ -126,7 +126,52 @@ if page == "home":
 # ---- ABOUT US ----
 elif page == "about":
     st.header("👨‍🏫 About Us")
-    st.write("We’re a team of educators and developers passionate about teaching children sustainable water habits through play and interactive storytelling.")
+
+    # Display SJSU logo
+    st.markdown("""
+        <div style="text-align: center;">
+            <img src="static/sjsu_logo.png" alt="SJSU Logo" style="width: 200px; margin-bottom: 20px;">
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Display team photo and names
+    st.markdown("""
+        <div style="text-align: center;">
+            <img src="static/Photo 4.jpg" alt="Team Photo" style="width: 80%; border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); margin-top: 20px;">
+            <p style="margin-top: 10px; font-size: 16px; font-weight: bold; color: #004466;">
+                Front Row (L–R): Andy Nguyen, Bella Le, Gisselle Picho<br>
+                Back Row (L–R): Rachel Yengle, Shreya Sobti
+            </p>
+        </div>
+        <br>
+    """, unsafe_allow_html=True)
+
+    # Updated About content
+    st.markdown("""
+    We’re a team of students from **San José State University** who are passionate about teaching children sustainable water habits through play and interactive storytelling.
+
+    🌍 **Our Mission:**  
+    Our mission is to inspire young minds to become lifelong champions of water conservation.  
+    We believe that children are not just the leaders of tomorrow — they are powerful change-makers today. Through fun, interactive learning, we aim to nurture a sense of responsibility, creativity, and care for our planet’s most precious resource: water.  
+    By making sustainability exciting and accessible, we hope to plant seeds of awareness that grow into a future where every drop counts.
+
+    ✨ **About Water Habits for Kids:**  
+    *Water Habits for Kids* is an educational platform created with young learners in mind.  
+    Designed for children between the ages of 3–12, it blends playful storytelling, real-world tips, and interactive challenges to make saving water a natural and enjoyable part of everyday life.  
+
+    Our approach focuses on small, achievable actions — from turning off taps to spotting leaks — helping kids see how their daily choices have a big impact.  
+    By connecting conservation to fun and imagination, we aim to build lifelong eco-friendly habits that ripple out to families, schools, and communities everywhere.
+
+    💧 **Fun Fact:**  
+    Turning off the tap while brushing your teeth can save up to 8 gallons of water every day!
+
+    🌊 **Why It Matters:**  
+    Teaching children about water conservation from an early age is crucial because the habits they form now will shape the future of our planet. Water is one of our most precious resources, yet it's often taken for granted. By helping kids understand the value of every drop, we empower them to make smarter choices that reduce waste, protect ecosystems, and ensure clean water is available for generations to come.
+
+    Starting with simple, fun actions, children learn that even small changes — like turning off the tap while brushing or fixing a dripping faucet — can make a big impact. Instilling these habits early builds a strong foundation of environmental responsibility, creating a ripple effect that can inspire families, classrooms, and entire communities.
+
+    👉 Thank you for visiting our project — together, let's make every drop count! 🌱
+    """)
 
 # ---- GOALS ----
 elif page == "goals":

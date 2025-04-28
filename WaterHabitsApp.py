@@ -15,9 +15,40 @@ if 'show_terms' not in st.session_state:
     st.session_state.show_terms = False
 
 if not st.session_state.agreed_to_terms:
-    st.markdown("<h1 style='text-align:center; color:#003344;'>🚸 Welcome to Water Habits for Kids</h1>", unsafe_allow_html=True)
     st.markdown("""
-    Before using the app, please review and agree to our [Privacy Policy](#privacy-policy) and [Terms of Service](#terms-of-service).
+    <style>
+    .stApp {
+        background-color: #d6f4ff;
+    }
+    h1, h2, h3, h4, p, label, .stMarkdown, .stExpanderHeader, .css-1v0mbdj, .css-1dp5vir {
+        color: white !important;
+        font-weight: bold;
+    }
+    .stButton>button {
+        background-color: #0a4c86;
+        color: white !important;
+        font-weight: bold;
+        border-radius: 10px;
+        height: 50px;
+        width: 100%;
+        font-size: 18px;
+    }
+    .stButton>button:hover {
+        background-color: #083d6d;
+    }
+    .stExpander > summary {
+        background-color: #0a4c86 !important;
+        color: white !important;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 10px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<h1 style='text-align:center;'>🚸 Welcome to Water Habits for Kids</h1>", unsafe_allow_html=True)
+    st.markdown("""
+    Before using the app, please review and agree to our **Privacy Policy** and **Terms of Service**.
     """)
 
     if st.button("📜 View Privacy Policy"):
@@ -30,10 +61,10 @@ if not st.session_state.agreed_to_terms:
         with st.expander("🔒 Privacy Policy", expanded=True):
             st.write("""
             **Privacy Policy**  
-            - We **do not collect** your name, age, or any personal information.  
-            - We only track how many water-saving tips or stories you create to improve the app experience.  
-            - Your information stays private and is **never shared** with anyone else.  
-            By using this app, you agree to this simple, kid-friendly privacy approach.
+            • We **do not collect** your name, age, or any personal information.  
+            • We only track how many water-saving tips or stories you create to improve the app.  
+            • Your information stays private and is **never shared** with anyone else.  
+            By using this app, you agree to our friendly privacy approach.
             """)
             if st.button("❌ Close Privacy Policy"):
                 st.session_state.show_privacy = False
@@ -43,10 +74,10 @@ if not st.session_state.agreed_to_terms:
         with st.expander("📜 Terms of Service", expanded=True):
             st.write("""
             **Terms of Service**  
-            - This app is for **educational and fun purposes** only.  
-            - Water tips and stories are AI-generated for inspiration and are not official advice.  
-            - Use this app responsibly.  
-            By continuing, you accept these terms.
+            • This app is for **educational and fun purposes** only.  
+            • Water tips and stories are AI-generated for inspiration, not official advice.  
+            • Use this app responsibly.  
+            By continuing, you agree to use the app appropriately.
             """)
             if st.button("❌ Close Terms of Service"):
                 st.session_state.show_terms = False

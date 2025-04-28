@@ -758,7 +758,7 @@ div[data-baseweb="slider"] > div > div > div > div {
 """, unsafe_allow_html=True)
 
     # Input fields
-    child_name = st.text_input("👶 Child's Name")
+    child_name = st.text_input("👶 Child's Name", placeholder="e.g Rachel")
 
     child_age = st.slider("🎂 Child's Age", min_value=3, max_value=12, value=6)
 
@@ -985,9 +985,8 @@ elif page == "story":
     setting = st.selectbox("🌍 Choose a Story Setting", ["bathroom", "garden", "school", "beach", "forest"])
     habit = st.selectbox("💧 Water Habit Focus", ["brushing teeth", "watering plants", "taking showers", "fixing leaks"])
 
-    with st.expander("⚙️ Game Settings"):
-        theme = st.radio("🎨 Visual Theme", ["Blue Drop", "Nature Kids", "Clean City", "Water Warriors"])
-        hint_mode = st.checkbox("💡 Show Helpful Hints", value=True)
+    theme = "Blue Drop"  # Set default theme automatically
+    hint_mode = True     # Set default hints on
 
     if st.button("✨ Generate My Eco Adventure"):
         with st.spinner("Creating your story and game..."):

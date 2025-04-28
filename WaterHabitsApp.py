@@ -617,6 +617,7 @@ elif page == "tips":
 
     # Bubble animation already global
     # Only light fade-in for content if needed (optional)
+    
     st.markdown("""
 <style>
 /* Main labels (text inputs, selects) */
@@ -639,17 +640,6 @@ div[data-baseweb="slider"] > div > div > div > div {
 </style>
 """, unsafe_allow_html=True)
     
-    st.markdown("""
-<style>
-/* Fix ALL slider marks ("3" and "12" numbers below the slider) */
-div[data-baseweb="slider"] span {
-    color: black !important;
-    font-weight: bold !important;
-    font-size: 16px !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
     st.markdown("""
         <style>
         /* Tips page clean style */
@@ -834,118 +824,50 @@ div[data-baseweb="slider"] > div > div > div > div {
 elif page == "story":
     set_background("static/Background.jpg")
 
-    # Page styling
+    # Light blue background + bubble animation
     st.markdown("""
     <style>
-        .stApp {
-            background-color: #d6f4ff;
-        }
+    .stApp {
+        background-color: #d6f4ff !important;
+    }
 
-        h1, h2, h3, h4, .stMarkdown, p {
-            color: #002244 !important;
-        }
+    h1, h2, h3, h4, .stMarkdown, p {
+        color: #002244 !important;
+    }
 
-        label, .stTextInput>label, .stSelectbox>label {
-            color: #002244 !important;
-            font-weight: bold !important;
-        }
+    /* Floating card style */
+    .story-card {
+        background-color: rgba(255, 255, 255, 0.85);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        margin: 2rem auto;
+        max-width: 900px;
+    }
 
-        /* Buttons navy blue */
-        .stButton>button {
-            background-color: #0a4c86;
-            color: white;
-            font-weight: bold;
-            padding: 0.5rem 1.5rem;
-            border-radius: 10px;
-        }
-
-        .stButton>button:hover {
-            background-color: #083d6d;
-        }
-
-        .stExpanderHeader {
-            color: #002244 !important;
-            font-weight: bold;
-        }
+    /* Navy Blue Game Settings Expander */
+    .stExpander > summary {
+        background-color: #0a4c86 !important;
+        color: white !important;
+        font-weight: bold !important;
+        border-radius: 10px;
+        padding: 10px;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-    st.markdown("""
-<style>
-.bubble {
-    position: absolute;
-    bottom: -100px;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: bubbleUp 20s infinite;
-    z-index: 0;
-}
+    st.markdown("<h1 style='text-align:center;'>📖 Eco Story Adventure + Game</h1>", unsafe_allow_html=True)
 
-/* Lighter blue shades for bubbles */
-.bubble.light {
-    background-color: #cceeff; /* baby blue */
-}
-.bubble.medium {
-    background-color: #aaddff; /* slightly deeper blue */
-}
-.bubble.dark {
-    background-color: #88ccff; /* even a little deeper */
-}
-
-/* Infinite floating animation */
-@keyframes bubbleUp {
-    0% {
-        transform: translateY(0) scale(0.8);
-        opacity: 0.8;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    100% {
-        transform: translateY(-1500px) scale(1.2);
-        opacity: 0;
-    }
-}
-
-.bubble-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    top: 0;
-    left: 0;
-    z-index: 0;
-}
-</style>
-
-<div class="bubble-container">
-    <div class="bubble light" style="left:5%; width:20px; height:20px; animation-delay: 0s;"></div>
-    <div class="bubble medium" style="left:15%; width:35px; height:35px; animation-delay: 5s;"></div>
-    <div class="bubble dark" style="left:30%; width:25px; height:25px; animation-delay: 2s;"></div>
-    <div class="bubble light" style="left:45%; width:40px; height:40px; animation-delay: 7s;"></div>
-    <div class="bubble medium" style="left:60%; width:18px; height:18px; animation-delay: 3s;"></div>
-    <div class="bubble dark" style="left:75%; width:30px; height:30px; animation-delay: 6s;"></div>
-    <div class="bubble light" style="left:85%; width:22px; height:22px; animation-delay: 4s;"></div>
-    <div class="bubble medium" style="left:90%; width:28px; height:28px; animation-delay: 1s;"></div>
-</div>
-""", unsafe_allow_html=True)
-
-    # Story Page Header
-    st.header("📖 Eco Story Adventure + Game")
-
-    # Inputs for the story
+    # Inputs
     hero = st.text_input("🧒 Hero’s Name", placeholder="e.g., Andy")
-
     setting = st.selectbox("🌍 Choose a Story Setting", ["bathroom", "garden", "school", "beach", "forest"])
-
     habit = st.selectbox("💧 Water Habit Focus", ["brushing teeth", "watering plants", "taking showers", "fixing leaks"])
 
     with st.expander("⚙️ Game Settings"):
         theme = st.radio("🎨 Visual Theme", ["Blue Drop", "Nature Kids", "Clean City", "Water Warriors"])
         hint_mode = st.checkbox("💡 Show Helpful Hints", value=True)
 
-    # Theme background
+    # Theme colors for comic UI
     theme_styles = {
         "Blue Drop": {"background": "#e1f5fe", "button": "#0288d1"},
         "Nature Kids": {"background": "#e8f5e9", "button": "#388e3c"},
@@ -955,24 +877,25 @@ elif page == "story":
 
     style = theme_styles.get(theme, theme_styles["Blue Drop"])
 
-    # Override background for this theme
+    # Bubble Background
+    unique_id = random.randint(1, 999999)
     st.markdown(f"""
-    <style>
-        .stApp {{
-            background-color: {style["background"]};
-        }}
-        .stButton>button {{
-            background-color: {style["button"]};
-            color: white;
-            font-weight: bold;
-            border-radius: 10px;
-        }}
-    </style>
+    <div class="bubble-container" id="bubbles-{unique_id}">
+        <div class="bubble light" style="left:5%; width:20px; height:20px; animation-delay:0s;"></div>
+        <div class="bubble medium" style="left:15%; width:35px; height:35px; animation-delay:5s;"></div>
+        <div class="bubble dark" style="left:30%; width:25px; height:25px; animation-delay:2s;"></div>
+        <div class="bubble light" style="left:45%; width:40px; height:40px; animation-delay:7s;"></div>
+        <div class="bubble medium" style="left:60%; width:18px; height:18px; animation-delay:3s;"></div>
+        <div class="bubble dark" style="left:75%; width:30px; height:30px; animation-delay:6s;"></div>
+        <div class="bubble light" style="left:85%; width:22px; height:22px; animation-delay:4s;"></div>
+        <div class="bubble medium" style="left:90%; width:28px; height:28px; animation-delay:1s;"></div>
+    </div>
     """, unsafe_allow_html=True)
 
-    # Generate Story Button
     if st.button("✨ Generate My Eco Adventure"):
         with st.spinner("Creating your story and game..."):
+
+            # Story Prompt
             story_prompt = (
                 f"Write a fun children's story about {hero}, a young eco-hero in the {setting}, "
                 f"learning to save water by practicing {habit}. Include a friendly sidekick and end with a water-saving tip."
@@ -990,14 +913,8 @@ elif page == "story":
 
             story = response.choices[0].message.content.strip()
 
-            # Display Story
-            st.subheader("📘 Your Personalized Story")
-            st.markdown(f"**{hero}'s Adventure in the {setting.capitalize()}**")
-            st.write(story)
-
-            # Game Rules Section
-            st.subheader("🎮 Your Water-Saving Game")
-            game_rules = {
+            # Game Challenge
+            rules = {
                 "brushing teeth": {
                     "challenge": "🪥 Tap to turn off the faucet while brushing.",
                     "goal": "Save 10 gallons by acting quickly!",
@@ -1020,41 +937,46 @@ elif page == "story":
                 }
             }
 
-            game = game_rules.get(habit.lower(), {
+            game = rules.get(habit.lower(), {
                 "challenge": "💧 Make a smart water-saving choice!",
                 "goal": "Reduce waste and become an Eco Hero!",
                 "points": "+5 per smart move."
             })
 
-            st.markdown(f"**Challenge:** {game['challenge']}")
-            st.markdown(f"**Goal:** {game['goal']}")
-            st.markdown(f"**Scoring:** {game['points']}")
+            # 📘 Personalized Story
+            st.markdown("<h2 style='text-align:center;'>📘 Your Personalized Story</h2>", unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="story-card">
+            <p>{story}</p>
+            </div>
+            """, unsafe_allow_html=True)
 
-            # Helpful Hints
-            if hint_mode:
-                with st.expander("💡 Tips & Tricks"):
-                    st.markdown("""
-- Turn off taps while brushing your teeth.  
-- Keep showers short and sweet.  
-- Fix leaky faucets quickly.  
-- Water plants early morning or evening.  
-- Use buckets instead of hoses when cleaning.
-                    """)
+            # 🎮 Water-Saving Game
+            st.markdown("<h2 style='text-align:center;'>🎮 Your Water-Saving Game</h2>", unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="story-card">
+            <p><strong>Challenge:</strong> {game['challenge']}</p>
+            <p><strong>Goal:</strong> {game['goal']}</p>
+            <p><strong>Scoring:</strong> {game['points']}</p>
+            </div>
+            """, unsafe_allow_html=True)
 
-            # Comic Scene Generation
-            st.subheader("🎬 Your Eco Adventure Comic")
-            comic_prompt = (
-                f"You are a comic artist turning this children's story into a 4-6 panel comic. "
-                f"Number each panel and describe each scene visually, 1–2 sentences per panel. "
-                f"Apply this theme: {theme}. Story:\n{story}"
+            # 🎬 Eco Adventure Comic
+            st.markdown("<h2 style='text-align:center;'>🎬 Your Eco Adventure Comic</h2>", unsafe_allow_html=True)
+
+            # Generate Comic Scenes
+            scene_prompt = (
+                f"Create a 4-6 panel comic script from this story. Each panel numbered (1., 2., 3...) "
+                f"with 1-2 sentence visual description. Panels MUST start with a number on a new line.\n\n"
+                f"Story:\n{story}"
             )
 
-            comic_response = client.chat.completions.create(
+            scene_response = client.chat.completions.create(
                 model="gpt-4",
-                messages=[{"role": "user", "content": comic_prompt}]
+                messages=[{"role": "user", "content": scene_prompt}]
             )
 
-            scene_text = comic_response.choices[0].message.content.strip()
+            scene_text = scene_response.choices[0].message.content.strip()
 
             import re
             panel_descriptions = re.findall(r'\d\.\s.*?(?=\n\d\.|\Z)', scene_text, re.DOTALL)
@@ -1062,7 +984,25 @@ elif page == "story":
             if panel_descriptions:
                 for i, panel in enumerate(panel_descriptions, start=1):
                     panel_cleaned = re.sub(r"^\d+\.\s*", "", panel.strip())
-                    st.markdown(f"**Panel {i}:** {panel_cleaned}")
+                    st.markdown(f"""
+                    <div class="story-card">
+                    <h4>Panel {i}</h4>
+                    <p>{panel_cleaned}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    with st.spinner(f"Generating image for Panel {i}..."):
+                        try:
+                            panel_img_response = client.images.generate(
+                                prompt=f"Comic panel about: {panel_cleaned}, visual theme {theme}",
+                                n=1,
+                                size="512x512"
+                            )
+                            image_url = panel_img_response.data[0].url
+                            st.image(image_url, caption=f"Panel {i}")
+                        except Exception:
+                            st.warning(f"⚠️ Could not generate image for Panel {i}.")
+                            st.text(f"Panel description: {panel_cleaned}")
             else:
-                st.warning("⚠️ Could not parse comic panels. Here is raw text:")
+                st.warning("⚠️ Comic panels could not be parsed. Here's raw output:")
                 st.code(scene_text)

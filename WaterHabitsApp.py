@@ -911,6 +911,22 @@ elif page == "story":
     </style>
     """, unsafe_allow_html=True)
 
+    st.markdown("""
+    <style>
+    /* Fix label texts like Hero’s Name, Choose a Story, etc. */
+    label, .stTextInput>label, .stSelectbox>label, .stSlider>label, .stRadio>label, .stExpander>summary {
+        color: #002244 !important; /* dark navy */
+        font-weight: bold !important;
+    }
+
+    /* Fix radio button options (Blue Drop, Nature Kids, etc.) */
+    .stRadio>div>label {
+        color: #002244 !important;
+        font-weight: bold !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     # ---- BUBBLE ANIMATION ----
     unique_id = random.randint(1, 999999)
     st.markdown(f"""

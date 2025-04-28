@@ -213,7 +213,7 @@ elif page == "about":
     </div>
     """, unsafe_allow_html=True)
 
-# ---- GOALS ----
+# ---- WATER GOALS ----
 elif page == "goals":
     # Set the background image same as Home
     set_background("static/Background.jpg")
@@ -224,37 +224,52 @@ elif page == "goals":
 
     # === Custom CSS Styles ===
     st.markdown("""
-        <style>
-            .goals-card {
-                background-color: rgba(255, 255, 255, 0.8);
-                padding: 2rem;
-                border-radius: 20px;
-                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-                max-width: 1000px;
-                margin: 2rem auto;
-            }
-            .goals-text {
-                color: black;
-                font-size: 18px;
-                line-height: 1.6;
-            }
-            h1, h2, h3 {
-                color: black;
-            }
-            .goal-image-caption {
-                text-align: center;
-                color: #003344;
-                font-weight: bold;
-                margin-top: 10px;
-                font-size: 18px;
-            }
-            .goal-image {
-                width: 100%;
-                border-radius: 15px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            }
-        </style>
-    """, unsafe_allow_html=True)
+    <style>
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .goals-card, .goal-image {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .goals-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            max-width: 1000px;
+            margin: 2rem auto;
+        }
+
+        .goals-text {
+            color: black;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            color: black;
+        }
+
+        .goal-image-caption {
+            text-align: center;
+            color: #003344;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .goal-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
     # === Water-Saving Goals Header ===
     st.markdown("<h1 style='text-align:center; color:black;'>🌍 Water-Saving Goals</h1>", unsafe_allow_html=True)

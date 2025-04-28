@@ -37,14 +37,15 @@ def img_to_base64(path):
 # ---- SESSION STATE ----
 if 'tips_used' not in st.session_state:
     st.session_state.tips_used = 0
+if "page" not in st.session_state:
+    st.session_state.page = "home"
 if 'last_tip' not in st.session_state:
     st.session_state.last_tip = ""
 if 'tip_history' not in st.session_state:
     st.session_state.tip_history = []
 
 # ---- PAGE SELECTION ----
-page = st.query_params.get("page", "home")
-
+page = st.session_state.page
 
 # ---- GLOBAL NAVBAR STYLE ----
 st.markdown("""
@@ -91,13 +92,16 @@ with col_logo:
     st.image("static/Logo.png", width=120)
 
 with col_nav:
-    st.markdown("""
-    <div class="topnav">
-        <a href="/?page=home" class="nav-btn">🏠 Home</a>
-        <a href="/?page=about" class="nav-btn">👨‍🏫 About Us</a>
-        <a href="/?page=goals" class="nav-btn">💧 Water Goals</a>
-    </div>
-    """, unsafe_allow_html=True)
+    colA, colB, colC = st.columns(3)
+    with colA:
+        if st.button("🏠 Home"):
+            st.session_state.page = "home"
+    with colB:
+        if st.button("👨‍🏫 About Us"):
+            st.session_state.page = "about"
+    with colC:
+        if st.button("💧 Water Goals"):
+            st.session_state.page = "goals"
 
 # ---- HOME ----
 if page == "home":

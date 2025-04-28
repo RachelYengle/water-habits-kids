@@ -6,7 +6,7 @@ import base64, pathlib
 import random
 from openai import OpenAI
 
-# ---- PRIVACY POLICY GATE ----
+# ---- PRIVACY POLICY GATE (Black Text Version) ----
 if 'agreed_to_terms' not in st.session_state:
     st.session_state.agreed_to_terms = False
 if 'show_privacy' not in st.session_state:
@@ -21,7 +21,7 @@ if not st.session_state.agreed_to_terms:
         background-color: #d6f4ff;
     }
     h1, h2, h3, h4, p, label, .stMarkdown, .stExpanderHeader, .css-1v0mbdj, .css-1dp5vir {
-        color: white !important;
+        color: black !important;
         font-weight: bold;
     }
     .stButton>button {

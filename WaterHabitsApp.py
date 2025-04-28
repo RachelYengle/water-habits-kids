@@ -189,11 +189,21 @@ if page == "home":
 .bubble {
     position: absolute;
     bottom: -100px;
-    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     opacity: 0.8;
     animation: bubbleUp 20s infinite;
     z-index: 0;
+}
+
+/* Lighter blue shades for bubbles */
+.bubble.light {
+    background-color: #cceeff; /* baby blue */
+}
+.bubble.medium {
+    background-color: #aaddff; /* slightly deeper blue */
+}
+.bubble.dark {
+    background-color: #88ccff; /* even a little deeper */
 }
 
 /* Infinite floating animation */
@@ -224,14 +234,14 @@ if page == "home":
 </style>
 
 <div class="bubble-container">
-    <div class="bubble" style="left:5%; width:25px; height:25px; animation-delay: 0s;"></div>
-    <div class="bubble" style="left:15%; width:30px; height:30px; animation-delay: 5s;"></div>
-    <div class="bubble" style="left:30%; width:20px; height:20px; animation-delay: 2s;"></div>
-    <div class="bubble" style="left:45%; width:35px; height:35px; animation-delay: 7s;"></div>
-    <div class="bubble" style="left:60%; width:22px; height:22px; animation-delay: 3s;"></div>
-    <div class="bubble" style="left:75%; width:28px; height:28px; animation-delay: 6s;"></div>
-    <div class="bubble" style="left:85%; width:18px; height:18px; animation-delay: 4s;"></div>
-    <div class="bubble" style="left:90%; width:25px; height:25px; animation-delay: 1s;"></div>
+    <div class="bubble light" style="left:5%; width:20px; height:20px; animation-delay: 0s;"></div>
+    <div class="bubble medium" style="left:15%; width:35px; height:35px; animation-delay: 5s;"></div>
+    <div class="bubble dark" style="left:30%; width:25px; height:25px; animation-delay: 2s;"></div>
+    <div class="bubble light" style="left:45%; width:40px; height:40px; animation-delay: 7s;"></div>
+    <div class="bubble medium" style="left:60%; width:18px; height:18px; animation-delay: 3s;"></div>
+    <div class="bubble dark" style="left:75%; width:30px; height:30px; animation-delay: 6s;"></div>
+    <div class="bubble light" style="left:85%; width:22px; height:22px; animation-delay: 4s;"></div>
+    <div class="bubble medium" style="left:90%; width:28px; height:28px; animation-delay: 1s;"></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -302,11 +312,21 @@ elif page == "about":
 .bubble {
     position: absolute;
     bottom: -100px;
-    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     opacity: 0.8;
     animation: bubbleUp 20s infinite;
     z-index: 0;
+}
+
+/* Lighter blue shades for bubbles */
+.bubble.light {
+    background-color: #cceeff; /* baby blue */
+}
+.bubble.medium {
+    background-color: #aaddff; /* slightly deeper blue */
+}
+.bubble.dark {
+    background-color: #88ccff; /* even a little deeper */
 }
 
 /* Infinite floating animation */
@@ -337,14 +357,14 @@ elif page == "about":
 </style>
 
 <div class="bubble-container">
-    <div class="bubble" style="left:5%; width:25px; height:25px; animation-delay: 0s;"></div>
-    <div class="bubble" style="left:15%; width:30px; height:30px; animation-delay: 5s;"></div>
-    <div class="bubble" style="left:30%; width:20px; height:20px; animation-delay: 2s;"></div>
-    <div class="bubble" style="left:45%; width:35px; height:35px; animation-delay: 7s;"></div>
-    <div class="bubble" style="left:60%; width:22px; height:22px; animation-delay: 3s;"></div>
-    <div class="bubble" style="left:75%; width:28px; height:28px; animation-delay: 6s;"></div>
-    <div class="bubble" style="left:85%; width:18px; height:18px; animation-delay: 4s;"></div>
-    <div class="bubble" style="left:90%; width:25px; height:25px; animation-delay: 1s;"></div>
+    <div class="bubble light" style="left:5%; width:20px; height:20px; animation-delay: 0s;"></div>
+    <div class="bubble medium" style="left:15%; width:35px; height:35px; animation-delay: 5s;"></div>
+    <div class="bubble dark" style="left:30%; width:25px; height:25px; animation-delay: 2s;"></div>
+    <div class="bubble light" style="left:45%; width:40px; height:40px; animation-delay: 7s;"></div>
+    <div class="bubble medium" style="left:60%; width:18px; height:18px; animation-delay: 3s;"></div>
+    <div class="bubble dark" style="left:75%; width:30px; height:30px; animation-delay: 6s;"></div>
+    <div class="bubble light" style="left:85%; width:22px; height:22px; animation-delay: 4s;"></div>
+    <div class="bubble medium" style="left:90%; width:28px; height:28px; animation-delay: 1s;"></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -469,11 +489,21 @@ elif page == "goals":
 .bubble {
     position: absolute;
     bottom: -100px;
-    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     opacity: 0.8;
     animation: bubbleUp 20s infinite;
     z-index: 0;
+}
+
+/* Lighter blue shades for bubbles */
+.bubble.light {
+    background-color: #cceeff; /* baby blue */
+}
+.bubble.medium {
+    background-color: #aaddff; /* slightly deeper blue */
+}
+.bubble.dark {
+    background-color: #88ccff; /* even a little deeper */
 }
 
 /* Infinite floating animation */
@@ -504,14 +534,14 @@ elif page == "goals":
 </style>
 
 <div class="bubble-container">
-    <div class="bubble" style="left:5%; width:25px; height:25px; animation-delay: 0s;"></div>
-    <div class="bubble" style="left:15%; width:30px; height:30px; animation-delay: 5s;"></div>
-    <div class="bubble" style="left:30%; width:20px; height:20px; animation-delay: 2s;"></div>
-    <div class="bubble" style="left:45%; width:35px; height:35px; animation-delay: 7s;"></div>
-    <div class="bubble" style="left:60%; width:22px; height:22px; animation-delay: 3s;"></div>
-    <div class="bubble" style="left:75%; width:28px; height:28px; animation-delay: 6s;"></div>
-    <div class="bubble" style="left:85%; width:18px; height:18px; animation-delay: 4s;"></div>
-    <div class="bubble" style="left:90%; width:25px; height:25px; animation-delay: 1s;"></div>
+    <div class="bubble light" style="left:5%; width:20px; height:20px; animation-delay: 0s;"></div>
+    <div class="bubble medium" style="left:15%; width:35px; height:35px; animation-delay: 5s;"></div>
+    <div class="bubble dark" style="left:30%; width:25px; height:25px; animation-delay: 2s;"></div>
+    <div class="bubble light" style="left:45%; width:40px; height:40px; animation-delay: 7s;"></div>
+    <div class="bubble medium" style="left:60%; width:18px; height:18px; animation-delay: 3s;"></div>
+    <div class="bubble dark" style="left:75%; width:30px; height:30px; animation-delay: 6s;"></div>
+    <div class="bubble light" style="left:85%; width:22px; height:22px; animation-delay: 4s;"></div>
+    <div class="bubble medium" style="left:90%; width:28px; height:28px; animation-delay: 1s;"></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -638,11 +668,21 @@ elif page == "tips":
 .bubble {
     position: absolute;
     bottom: -100px;
-    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     opacity: 0.8;
     animation: bubbleUp 20s infinite;
     z-index: 0;
+}
+
+/* Lighter blue shades for bubbles */
+.bubble.light {
+    background-color: #cceeff; /* baby blue */
+}
+.bubble.medium {
+    background-color: #aaddff; /* slightly deeper blue */
+}
+.bubble.dark {
+    background-color: #88ccff; /* even a little deeper */
 }
 
 /* Infinite floating animation */
@@ -673,14 +713,14 @@ elif page == "tips":
 </style>
 
 <div class="bubble-container">
-    <div class="bubble" style="left:5%; width:25px; height:25px; animation-delay: 0s;"></div>
-    <div class="bubble" style="left:15%; width:30px; height:30px; animation-delay: 5s;"></div>
-    <div class="bubble" style="left:30%; width:20px; height:20px; animation-delay: 2s;"></div>
-    <div class="bubble" style="left:45%; width:35px; height:35px; animation-delay: 7s;"></div>
-    <div class="bubble" style="left:60%; width:22px; height:22px; animation-delay: 3s;"></div>
-    <div class="bubble" style="left:75%; width:28px; height:28px; animation-delay: 6s;"></div>
-    <div class="bubble" style="left:85%; width:18px; height:18px; animation-delay: 4s;"></div>
-    <div class="bubble" style="left:90%; width:25px; height:25px; animation-delay: 1s;"></div>
+    <div class="bubble light" style="left:5%; width:20px; height:20px; animation-delay: 0s;"></div>
+    <div class="bubble medium" style="left:15%; width:35px; height:35px; animation-delay: 5s;"></div>
+    <div class="bubble dark" style="left:30%; width:25px; height:25px; animation-delay: 2s;"></div>
+    <div class="bubble light" style="left:45%; width:40px; height:40px; animation-delay: 7s;"></div>
+    <div class="bubble medium" style="left:60%; width:18px; height:18px; animation-delay: 3s;"></div>
+    <div class="bubble dark" style="left:75%; width:30px; height:30px; animation-delay: 6s;"></div>
+    <div class="bubble light" style="left:85%; width:22px; height:22px; animation-delay: 4s;"></div>
+    <div class="bubble medium" style="left:90%; width:28px; height:28px; animation-delay: 1s;"></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -792,11 +832,21 @@ elif page == "story":
 .bubble {
     position: absolute;
     bottom: -100px;
-    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     opacity: 0.8;
     animation: bubbleUp 20s infinite;
     z-index: 0;
+}
+
+/* Lighter blue shades for bubbles */
+.bubble.light {
+    background-color: #cceeff; /* baby blue */
+}
+.bubble.medium {
+    background-color: #aaddff; /* slightly deeper blue */
+}
+.bubble.dark {
+    background-color: #88ccff; /* even a little deeper */
 }
 
 /* Infinite floating animation */
@@ -827,14 +877,14 @@ elif page == "story":
 </style>
 
 <div class="bubble-container">
-    <div class="bubble" style="left:5%; width:25px; height:25px; animation-delay: 0s;"></div>
-    <div class="bubble" style="left:15%; width:30px; height:30px; animation-delay: 5s;"></div>
-    <div class="bubble" style="left:30%; width:20px; height:20px; animation-delay: 2s;"></div>
-    <div class="bubble" style="left:45%; width:35px; height:35px; animation-delay: 7s;"></div>
-    <div class="bubble" style="left:60%; width:22px; height:22px; animation-delay: 3s;"></div>
-    <div class="bubble" style="left:75%; width:28px; height:28px; animation-delay: 6s;"></div>
-    <div class="bubble" style="left:85%; width:18px; height:18px; animation-delay: 4s;"></div>
-    <div class="bubble" style="left:90%; width:25px; height:25px; animation-delay: 1s;"></div>
+    <div class="bubble light" style="left:5%; width:20px; height:20px; animation-delay: 0s;"></div>
+    <div class="bubble medium" style="left:15%; width:35px; height:35px; animation-delay: 5s;"></div>
+    <div class="bubble dark" style="left:30%; width:25px; height:25px; animation-delay: 2s;"></div>
+    <div class="bubble light" style="left:45%; width:40px; height:40px; animation-delay: 7s;"></div>
+    <div class="bubble medium" style="left:60%; width:18px; height:18px; animation-delay: 3s;"></div>
+    <div class="bubble dark" style="left:75%; width:30px; height:30px; animation-delay: 6s;"></div>
+    <div class="bubble light" style="left:85%; width:22px; height:22px; animation-delay: 4s;"></div>
+    <div class="bubble medium" style="left:90%; width:28px; height:28px; animation-delay: 1s;"></div>
 </div>
 """, unsafe_allow_html=True)
 

@@ -665,10 +665,10 @@ elif page == "tips":
 
     st.markdown("""
 <style>
-/* Make slider numbers black */
-.css-1cpxqw2, .css-1aumxhk, .stSlider label, .stSlider span {
+/* Fix child age slider numbers */
+div[data-baseweb="slider"] > div > div > div > div {
     color: black !important;
-    font-weight: bold;
+    font-weight: bold !important;
 }
 </style>
 """, unsafe_allow_html=True)

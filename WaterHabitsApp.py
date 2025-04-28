@@ -5,6 +5,7 @@ import pandas as pd
 import base64, pathlib
 import re
 from openai import OpenAI
+import random
 
 # ---- CONFIG ----
 st.set_page_config(page_title="Water Habits for Kids", layout="wide")
@@ -149,17 +150,20 @@ if page == "home":
         </style>
     """, unsafe_allow_html=True)
 
-    # Bubble Colors (NEW! 🌈)
-    st.markdown("""
-    <div class="bubble-container">
-        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
-        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    # Unique animation ID on each render
+    unique_id = random.randint(1, 999999)
+
+    # Dynamic bubbles with unique id
+    st.markdown(f"""
+    <div class="bubble-container" id="bubbles-{unique_id}">
+        <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -284,17 +288,20 @@ elif page == "about":
     </style>
     """, unsafe_allow_html=True)
 
-    # Floating Colorful Bubbles
-    st.markdown("""
-    <div class="bubble-container">
-        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
-        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    # Unique animation ID on each render
+    unique_id = random.randint(1, 999999)
+
+    # Dynamic bubbles with unique id
+    st.markdown(f"""
+    <div class="bubble-container" id="bubbles-{unique_id}">
+        <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -475,17 +482,20 @@ elif page == "goals":
     </style>
     """, unsafe_allow_html=True)
 
-    # Floating Colorful Bubbles
-    st.markdown("""
-    <div class="bubble-container">
-        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
-        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    # Unique animation ID on each render
+    unique_id = random.randint(1, 999999)
+
+    # Dynamic bubbles with unique id
+    st.markdown(f"""
+    <div class="bubble-container" id="bubbles-{unique_id}">
+        <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -663,17 +673,20 @@ elif page == "tips":
     </style>
     """, unsafe_allow_html=True)
 
-    # Floating Colorful Bubbles
-    st.markdown("""
-    <div class="bubble-container">
-        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
-        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    # Unique animation ID on each render
+    unique_id = random.randint(1, 999999)
+
+    # Dynamic bubbles with unique id
+    st.markdown(f"""
+    <div class="bubble-container" id="bubbles-{unique_id}">
+        <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -799,17 +812,20 @@ elif page == "story":
     </style>
     """, unsafe_allow_html=True)
 
-    # Floating Colorful Bubbles
-    st.markdown("""
-    <div class="bubble-container">
-        <div class="bubble" style="left:5%; width:25px; height:25px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:15%; width:30px; height:30px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:30%; width:20px; height:20px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:45%; width:35px; height:35px; background-color:rgba(173,216,230,0.9);"></div>
-        <div class="bubble" style="left:60%; width:22px; height:22px; background-color:rgba(240,248,255,0.9);"></div>
-        <div class="bubble" style="left:75%; width:28px; height:28px; background-color:rgba(224,255,255,0.9);"></div>
-        <div class="bubble" style="left:85%; width:18px; height:18px; background-color:rgba(255,255,255,0.9);"></div>
-        <div class="bubble" style="left:90%; width:25px; height:25px; background-color:rgba(173,216,230,0.9);"></div>
+    # Unique animation ID on each render
+    unique_id = random.randint(1, 999999)
+
+    # Dynamic bubbles with unique id
+    st.markdown(f"""
+    <div class="bubble-container" id="bubbles-{unique_id}">
+        <div class="bubble" style="left:5%; width:25px; height:25px;"></div>
+        <div class="bubble" style="left:15%; width:30px; height:30px;"></div>
+        <div class="bubble" style="left:30%; width:20px; height:20px;"></div>
+        <div class="bubble" style="left:45%; width:35px; height:35px;"></div>
+        <div class="bubble" style="left:60%; width:22px; height:22px;"></div>
+        <div class="bubble" style="left:75%; width:28px; height:28px;"></div>
+        <div class="bubble" style="left:85%; width:18px; height:18px;"></div>
+        <div class="bubble" style="left:90%; width:25px; height:25px;"></div>
     </div>
     """, unsafe_allow_html=True)
 

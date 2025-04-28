@@ -881,6 +881,20 @@ elif page == "story":
     </style>
     """, unsafe_allow_html=True)
 
+    st.markdown("""
+    <style>
+    /* Fix Floating Card text */
+    .story-card, .story-card p, .story-card strong, .story-card h2, .story-card h4 {
+        color: #002244 !important; /* dark navy for floating cards */
+    }
+
+    /* ALSO fix page main headings */
+    h1, h2, h3 {
+        color: #002244 !important; /* dark navy for big headers too */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     # --- Story Page CSS ---
     st.markdown("""
     <style>

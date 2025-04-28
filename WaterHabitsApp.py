@@ -29,52 +29,43 @@ if not st.session_state.agreed_to_terms:
         font-weight: bold;
     }
 
-    /* BUTTON Styling (Dark Navy with White Text) */
-    div.stButton > button {
-        background-color: #0a4c86;
+    /* BUTTON Styling - Navy Background + White Text */
+    button[kind="primary"] {
+        background-color: #0a4c86 !important;
         color: white !important;
-        font-weight: bold;
-        border-radius: 10px;
-        height: 50px;
-        width: 100%;
-        font-size: 18px;
-        border: none;
+        font-weight: bold !important;
+        border-radius: 10px !important;
+        height: 50px !important;
+        width: 100% !important;
+        font-size: 18px !important;
+        border: none !important;
         transition: background-color 0.3s, transform 0.2s;
     }
 
-    /* Make sure button internal span/div text is white */
-    div.stButton > button > div,
-    div.stButton > button > span,
-    div.stButton > button > div > span {
-        color: white !important;
-        font-weight: bold !important;
-    }
-
     /* Button Hover Effect */
-    div.stButton > button:hover {
-        background-color: #083d6d;
-        transform: scale(1.05);
+    button[kind="primary"]:hover {
+        background-color: #083d6d !important;
+        transform: scale(1.05) !important;
     }
 
-    /* Expander Headers (Privacy and Terms Boxes) */
+    /* Expander Header Styling */
     .stExpander > summary {
         background-color: #0a4c86 !important;
         color: white !important;
-        font-weight: bold;
-        border-radius: 10px;
-        padding: 10px;
+        font-weight: bold !important;
+        border-radius: 10px !important;
+        padding: 10px !important;
     }
     </style>
     """, unsafe_allow_html=True)
 
-    # Welcome Title
+    # ---- WELCOME HEADER ----
     st.markdown("<h1 style='text-align:center;'>🚸 Welcome to Water Habits for Kids</h1>", unsafe_allow_html=True)
-
     st.markdown("""
     Before using the app, please review and agree to our **Privacy Policy** and **Terms of Service**.
     """)
 
-    # Buttons to view Privacy and Terms
+    # ---- PRIVACY & TERMS BUTTONS ----
     col_privacy, col_terms = st.columns(2)
     with col_privacy:
         if st.button("📜 View Privacy Policy"):
@@ -83,7 +74,7 @@ if not st.session_state.agreed_to_terms:
         if st.button("📜 View Terms of Service"):
             st.session_state.show_terms = True
 
-    # Show Privacy Policy
+    # ---- PRIVACY POLICY EXPANDER ----
     if st.session_state.show_privacy:
         with st.expander("📜 Privacy Policy", expanded=True):
             st.markdown("""
@@ -98,7 +89,7 @@ if not st.session_state.agreed_to_terms:
                 st.session_state.show_privacy = False
                 st.rerun()
 
-    # Show Terms of Service
+    # ---- TERMS OF SERVICE EXPANDER ----
     if st.session_state.show_terms:
         with st.expander("📜 Terms of Service", expanded=True):
             st.markdown("""
@@ -113,10 +104,9 @@ if not st.session_state.agreed_to_terms:
                 st.session_state.show_terms = False
                 st.rerun()
 
-    # Agreement Checkbox
+    # ---- AGREEMENT CHECKBOX & CONTINUE ----
     agree = st.checkbox("✅ I have read and agree to the Privacy Policy and Terms of Service.")
 
-    # Continue Button
     if agree:
         if st.button("👉 Continue"):
             st.session_state.agreed_to_terms = True

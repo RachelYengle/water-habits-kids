@@ -29,10 +29,10 @@ if not st.session_state.agreed_to_terms:
         font-weight: bold;
     }
 
-    /* Force Navy Buttons + White Text */
+    /* Fix All Button Text + Background */
     div.stButton > button {
-        background-color: #0a4c86 !important;
-        color: white !important;
+        background-color: #0a4c86 !important; /* Navy background */
+        color: white !important;              /* White text */
         font-weight: bold !important;
         border-radius: 10px;
         height: 50px;
@@ -40,28 +40,25 @@ if not st.session_state.agreed_to_terms:
         font-size: 18px;
         border: none;
         transition: background-color 0.3s, transform 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
-
-    /* Ensure ALL button child text is white */
-    div.stButton > button * {
-        color: white !important;
-        font-weight: bold !important;
-    }
-
-    /* Button Hover Effect */
     div.stButton > button:hover {
         background-color: #083d6d !important;
         transform: scale(1.05);
     }
 
-    /* Expander Style (Privacy + Terms) */
+    /* Make span/div inside buttons also white */
+    div.stButton > button > div,
+    div.stButton > button > span,
+    div.stButton > button > div > span {
+        color: white !important;
+        font-weight: bold !important;
+    }
+
+    /* Expander (Privacy + Terms) */
     .stExpander > summary {
         background-color: #0a4c86 !important;
         color: white !important;
-        font-weight: bold;
+        font-weight: bold !important;
         border-radius: 10px;
         padding: 10px;
     }
@@ -124,7 +121,6 @@ if not st.session_state.agreed_to_terms:
             st.rerun()
 
     st.stop()
-
 
 # ---- CONFIG ----
 st.set_page_config(page_title="Water Habits for Kids", layout="wide")
@@ -932,7 +928,12 @@ div[data-baseweb="slider"] > div > div > div > div {
     # Tip History & Download
     if st.session_state.tips_used > 0:
         st.markdown("<h3 class='custom-subheader'>📊 Tip Progress</h3>", unsafe_allow_html=True)
-        st.write(f"✅ Tips Generated: {st.session_state.tips_used}")
+
+        st.markdown(f"""
+        <div style='color: black; font-weight: bold; font-size: 20px;'>
+            ✅ Tips Generated: {st.session_state.tips_used}
+        </div>
+    """, unsafe_allow_html=True)
         st.markdown(f"<div class='most-recent'>💡 <strong>Most Recent Tip:</strong> {st.session_state.last_tip}</div>", unsafe_allow_html=True)
 
         tips_text = "\n".join(st.session_state.tip_history)

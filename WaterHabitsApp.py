@@ -297,6 +297,56 @@ elif page == "about":
         }
     </style>
     """, unsafe_allow_html=True)
+    st.markdown("""
+<style>
+.bubble {
+    position: absolute;
+    bottom: -100px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: bubbleUp 20s infinite;
+    z-index: 0;
+}
+
+/* Infinite floating animation */
+@keyframes bubbleUp {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-1500px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.bubble-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+</style>
+
+<div class="bubble-container">
+    <div class="bubble" style="left:5%; width:25px; height:25px; animation-delay: 0s;"></div>
+    <div class="bubble" style="left:15%; width:30px; height:30px; animation-delay: 5s;"></div>
+    <div class="bubble" style="left:30%; width:20px; height:20px; animation-delay: 2s;"></div>
+    <div class="bubble" style="left:45%; width:35px; height:35px; animation-delay: 7s;"></div>
+    <div class="bubble" style="left:60%; width:22px; height:22px; animation-delay: 3s;"></div>
+    <div class="bubble" style="left:75%; width:28px; height:28px; animation-delay: 6s;"></div>
+    <div class="bubble" style="left:85%; width:18px; height:18px; animation-delay: 4s;"></div>
+    <div class="bubble" style="left:90%; width:25px; height:25px; animation-delay: 1s;"></div>
+</div>
+""", unsafe_allow_html=True)
 
     # ---- About Us Header
     st.markdown("<h1 style='text-align:center; color:black;'>👨‍🏫 About Us</h1>", unsafe_allow_html=True)
@@ -413,6 +463,57 @@ elif page == "goals":
         }
     </style>
     """, unsafe_allow_html=True)
+
+    st.markdown("""
+<style>
+.bubble {
+    position: absolute;
+    bottom: -100px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: bubbleUp 20s infinite;
+    z-index: 0;
+}
+
+/* Infinite floating animation */
+@keyframes bubbleUp {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-1500px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.bubble-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+</style>
+
+<div class="bubble-container">
+    <div class="bubble" style="left:5%; width:25px; height:25px; animation-delay: 0s;"></div>
+    <div class="bubble" style="left:15%; width:30px; height:30px; animation-delay: 5s;"></div>
+    <div class="bubble" style="left:30%; width:20px; height:20px; animation-delay: 2s;"></div>
+    <div class="bubble" style="left:45%; width:35px; height:35px; animation-delay: 7s;"></div>
+    <div class="bubble" style="left:60%; width:22px; height:22px; animation-delay: 3s;"></div>
+    <div class="bubble" style="left:75%; width:28px; height:28px; animation-delay: 6s;"></div>
+    <div class="bubble" style="left:85%; width:18px; height:18px; animation-delay: 4s;"></div>
+    <div class="bubble" style="left:90%; width:25px; height:25px; animation-delay: 1s;"></div>
+</div>
+""", unsafe_allow_html=True)
 
     # Water-Saving Goals Header
     st.markdown("<h1 style='text-align:center; color:black;'>🌍 Water-Saving Goals</h1>", unsafe_allow_html=True)
@@ -532,6 +633,57 @@ elif page == "tips":
 
     st.markdown("<h2 class='custom-header'>💡 Personalized Water-Saving Tip</h2>", unsafe_allow_html=True)
 
+    st.markdown("""
+<style>
+.bubble {
+    position: absolute;
+    bottom: -100px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: bubbleUp 20s infinite;
+    z-index: 0;
+}
+
+/* Infinite floating animation */
+@keyframes bubbleUp {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-1500px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.bubble-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+</style>
+
+<div class="bubble-container">
+    <div class="bubble" style="left:5%; width:25px; height:25px; animation-delay: 0s;"></div>
+    <div class="bubble" style="left:15%; width:30px; height:30px; animation-delay: 5s;"></div>
+    <div class="bubble" style="left:30%; width:20px; height:20px; animation-delay: 2s;"></div>
+    <div class="bubble" style="left:45%; width:35px; height:35px; animation-delay: 7s;"></div>
+    <div class="bubble" style="left:60%; width:22px; height:22px; animation-delay: 3s;"></div>
+    <div class="bubble" style="left:75%; width:28px; height:28px; animation-delay: 6s;"></div>
+    <div class="bubble" style="left:85%; width:18px; height:18px; animation-delay: 4s;"></div>
+    <div class="bubble" style="left:90%; width:25px; height:25px; animation-delay: 1s;"></div>
+</div>
+""", unsafe_allow_html=True)
+
     # Input fields
     child_name = st.text_input("👶 Child's Name")
 
@@ -634,6 +786,57 @@ elif page == "story":
         }
     </style>
     """, unsafe_allow_html=True)
+
+    st.markdown("""
+<style>
+.bubble {
+    position: absolute;
+    bottom: -100px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: bubbleUp 20s infinite;
+    z-index: 0;
+}
+
+/* Infinite floating animation */
+@keyframes bubbleUp {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-1500px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.bubble-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+</style>
+
+<div class="bubble-container">
+    <div class="bubble" style="left:5%; width:25px; height:25px; animation-delay: 0s;"></div>
+    <div class="bubble" style="left:15%; width:30px; height:30px; animation-delay: 5s;"></div>
+    <div class="bubble" style="left:30%; width:20px; height:20px; animation-delay: 2s;"></div>
+    <div class="bubble" style="left:45%; width:35px; height:35px; animation-delay: 7s;"></div>
+    <div class="bubble" style="left:60%; width:22px; height:22px; animation-delay: 3s;"></div>
+    <div class="bubble" style="left:75%; width:28px; height:28px; animation-delay: 6s;"></div>
+    <div class="bubble" style="left:85%; width:18px; height:18px; animation-delay: 4s;"></div>
+    <div class="bubble" style="left:90%; width:25px; height:25px; animation-delay: 1s;"></div>
+</div>
+""", unsafe_allow_html=True)
 
     # Story Page Header
     st.header("📖 Eco Story Adventure + Game")

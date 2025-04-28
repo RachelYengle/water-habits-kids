@@ -824,6 +824,28 @@ div[data-baseweb="slider"] > div > div > div > div {
 elif page == "story":
     set_background("static/Background.jpg")
 
+    # Fix button colors (no extra indent)
+    st.markdown("""
+    <style>
+    /* Fix Nav Buttons on Story page */
+    .stButton>button {
+        background-color: #0a4c86; /* Dark Navy Background */
+        color: white;              /* Make Text White */
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 0.5rem 1.5rem;
+    }
+    .stButton>button:hover {
+        background-color: #083d6d;
+    }
+
+    /* Also fix general button text */
+    .stButton>button span {
+        color: white !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     # Light blue background + bubble animation
     st.markdown("""
     <style>
@@ -858,25 +880,6 @@ elif page == "story":
 
     st.markdown("<h1 style='text-align:center;'>📖 Eco Story Adventure + Game</h1>", unsafe_allow_html=True)
 
-    # Inputs
-    hero = st.text_input("🧒 Hero’s Name", placeholder="e.g., Andy")
-    setting = st.selectbox("🌍 Choose a Story Setting", ["bathroom", "garden", "school", "beach", "forest"])
-    habit = st.selectbox("💧 Water Habit Focus", ["brushing teeth", "watering plants", "taking showers", "fixing leaks"])
-
-    with st.expander("⚙️ Game Settings"):
-        theme = st.radio("🎨 Visual Theme", ["Blue Drop", "Nature Kids", "Clean City", "Water Warriors"])
-        hint_mode = st.checkbox("💡 Show Helpful Hints", value=True)
-
-    # Theme colors for comic UI
-    theme_styles = {
-        "Blue Drop": {"background": "#e1f5fe", "button": "#0288d1"},
-        "Nature Kids": {"background": "#e8f5e9", "button": "#388e3c"},
-        "Clean City": {"background": "#eeeeee", "button": "#616161"},
-        "Water Warriors": {"background": "#fbe9e7", "button": "#e64a19"}
-    }
-
-    style = theme_styles.get(theme, theme_styles["Blue Drop"])
-
     # Bubble Background
     unique_id = random.randint(1, 999999)
     st.markdown(f"""
@@ -892,15 +895,22 @@ elif page == "story":
     </div>
     """, unsafe_allow_html=True)
 
+    # Inputs
+    hero = st.text_input("🧒 Hero’s Name", placeholder="e.g., Andy")
+    setting = st.selectbox("🌍 Choose a Story Setting", ["bathroom", "garden", "school", "beach", "forest"])
+    habit = st.selectbox("💧 Water Habit Focus", ["brushing teeth", "watering plants", "taking showers", "fixing leaks"])
+
+    with st.expander("⚙️ Game Settings"):
+        theme = st.radio("🎨 Visual Theme", ["Blue Drop", "Nature Kids", "Clean City", "Water Warriors"])
+        hint_mode = st.checkbox("💡 Show Helpful Hints", value=True)
+
     if st.button("✨ Generate My Eco Adventure"):
         with st.spinner("Creating your story and game..."):
-
-            # Story Prompt
+            # Generate story
             story_prompt = (
                 f"Write a fun children's story about {hero}, a young eco-hero in the {setting}, "
                 f"learning to save water by practicing {habit}. Include a friendly sidekick and end with a water-saving tip."
             )
-
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -910,10 +920,9 @@ elif page == "story":
                 max_tokens=800,
                 temperature=0.8
             )
-
             story = response.choices[0].message.content.strip()
 
-            # Game Challenge
+            # Define Game Challenge
             rules = {
                 "brushing teeth": {
                     "challenge": "🪥 Tap to turn off the faucet while brushing.",
@@ -970,12 +979,10 @@ elif page == "story":
                 f"with 1-2 sentence visual description. Panels MUST start with a number on a new line.\n\n"
                 f"Story:\n{story}"
             )
-
             scene_response = client.chat.completions.create(
                 model="gpt-4",
                 messages=[{"role": "user", "content": scene_prompt}]
             )
-
             scene_text = scene_response.choices[0].message.content.strip()
 
             import re
@@ -1004,5 +1011,5 @@ elif page == "story":
                             st.warning(f"⚠️ Could not generate image for Panel {i}.")
                             st.text(f"Panel description: {panel_cleaned}")
             else:
-                st.warning("⚠️ Comic panels could not be parsed. Here's raw output:")
+                st.warning("⚠️ Comic panels could not be parsed. Here’s raw output:")
                 st.code(scene_text)

@@ -34,6 +34,10 @@ def set_background(image_file):
 def img_to_base64(path):
     return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
 
+# ---- Water gOALS IMAGES ----
+def img_to_base64(path):
+    return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
+
 # ---- SESSION STATE ----
 if 'tips_used' not in st.session_state:
     st.session_state.tips_used = 0
@@ -253,11 +257,11 @@ elif page == "goals":
 
     # --- First Image ---
     st.markdown(f"""
-    <div style="text-align:center;">
-        <img src="static/Kids_in_Yard.jpg" class="goal-image">
-        <div class="goal-image-caption">Learning Rainwater Collection</div>
-    </div>
-    """, unsafe_allow_html=True)
+<div style="text-align:center;">
+    <img src="data:image/jpeg;base64,{yard_img_b64}" class="goal-image">
+    <div class="goal-image-caption">Learning Rainwater Collection</div>
+</div>
+""", unsafe_allow_html=True)
 
     # --- Floating Card: First Section of Text ---
     st.markdown("""
@@ -292,11 +296,11 @@ elif page == "goals":
 
     # --- Second Image ---
     st.markdown(f"""
-    <div style="text-align:center;">
-        <img src="static/Kids_in_Bathroom.jpg" class="goal-image">
-        <div class="goal-image-caption">Practicing Water-Saving at Home</div>
-    </div>
-    """, unsafe_allow_html=True)
+<div style="text-align:center;">
+    <img src="data:image/jpeg;base64,{bathroom_img_b64}" class="goal-image">
+    <div class="goal-image-caption">Practicing Water-Saving at Home</div>
+</div>
+""", unsafe_allow_html=True)
 
     # --- Floating Card: Second Section of Text ---
     st.markdown("""
